@@ -1,15 +1,26 @@
+import "./App.css";
+import Bar from "./components/Bar/Bar.jsx";
+import Navigation from './components/Navigation/navigation.jsx';
+import Sidebar from "./components/Sidbar/Sidebar.jsx";
+import TrackList from "./components/TrackList/Track.jsx";
 // import logo from './logo.svg';
-import './App.css';
+
 
 function App() {
   return (
-
-    <div className="App">
-      <header className="App-header">
-        <p>Здесь скоро будет Skypro.Music</p>
-      </header>
+    <div className="wrapper">
+  <div className="container">
+    <main className="main">
+        <Navigation/>
+        <TrackList/>
+        <Sidebar/>
+    </main>
+    <Bar/>
+    <footer className="footer"></footer>
     </div>
-  );
+    </div>
+    
+);
 }
 
 export default App;
