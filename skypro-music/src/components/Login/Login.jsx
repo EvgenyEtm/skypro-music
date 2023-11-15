@@ -1,40 +1,38 @@
-import "../Login/Login.css";
 import LoginImg from "../../img/logo_modal.png";
+import * as S from './Login.Styles';
 
-function Login() {
-    return (
-        <div className="wrapper">
-        <div className="container-enter">
-          <div className="modal__block">
-            <form className="modal__form-login" action="#">
-              <a href="../">
-                <div className="modal__logo">
-                  <img src={`${LoginImg}`} alt="logo"/>
-                </div>
-              </a>
-              <input
-                className="modal__input login"
-                type="text"
-                name="login"
-                placeholder="Почта"
-              />
-              <input
-                className="modal__input password"
-                type="password"
-                name="password"
-                placeholder="Пароль"
-              />
-              <button className="modal__btn-enter">
-                <a href="../index.html">Войти</a>
-              </button>
-              <button className="modal__btn-signup">
-                <a href="signup.html">Зарегистрироваться</a>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    )
-};
+function Login () {
+    <S.Wrapper>
+      <S.ContainerEnter>
+        <S.ModalBlock>
+          <S.ModalFormLogin action="#">
+            <a href="../">
+              <S.ModalLogo>
+                <img src={LoginImg} alt="logo"/>
+              </S.ModalLogo>
+            </a>
+            <S.ModalInput
+              className="login"
+              type="text"
+              name="login"
+              placeholder="Почта"
+            />
+            <S.ModalInput
+              className="password"
+              type="password"
+              name="password"
+              placeholder="Пароль"
+            />
+            <S.ModalBtnEnter>
+              <a href="../index.html">Войти</a>
+            </S.ModalBtnEnter>
+            <S.ModalBtnSignUp>
+              <a href="signup.html">Зарегистрироваться</a>
+            </S.ModalBtnSignUp>
+          </S.ModalFormLogin>
+        </S.ModalBlock>
+      </S.ContainerEnter>
+    </S.Wrapper>
+}
 
 export default Login;

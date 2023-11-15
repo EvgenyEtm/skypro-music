@@ -1,9 +1,8 @@
 import "./App.css";
-import Bar from "./components/Bar/Bar.jsx";
-import Navigation from './components/Navigation/navigation.jsx';
+import Bar from "./components/Bar/Bar";
+import Navigation from "./components/Navigation/Navigation.jsx";
 import Sidebar from "./components/Sidbar/Sidebar.jsx";
-import TrackList from "./components/TrackList/Track.jsx";
-// import logo from './logo.svg';
+import TrackList from "./components/TrackList/TrackList.jsx";
 
 
 function App() {
