@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import SpriteSvg from "../../img/icon/sprite.svg"
-import Skeleton from 'react-loading-skeleton';
-import * as S from './BarStyles';
-export const timer = 5000;
+import { useEffect, useState } from 'react'
+import SpriteSvg from '../../img/icon/sprite.svg'
+import Skeleton from 'react-loading-skeleton'
+import * as S from './BarStyles'
+export const timer = 5000
 
 function Bar() {
   const [isLoading, setIsLoading] = useState(true)
@@ -16,13 +16,13 @@ function Bar() {
   return (
     <S.Bar>
       <S.BarContent>
-        <S.BarPlayerProgress/>
+        <S.BarPlayerProgress />
         <S.BarPlayerBlock>
           <S.BarPlayer className="player">
             <S.PlayerControls>
               <S.PlayerBtnPrev>
                 <S.PlayerBtnPrevSvg className="_btn-icon" alt="prev">
-                  <use xlinkHref={`${SpriteSvg}#icon-prev`}/>
+                  <use xlinkHref={`${SpriteSvg}#icon-prev`} />
                 </S.PlayerBtnPrevSvg>
               </S.PlayerBtnPrev>
               <S.PlayerBtnPlay className="_btn">
@@ -104,10 +104,7 @@ function Bar() {
                 </S.VolumeSvg>
               </S.VolumeImage>
               <S.VolumeProgress>
-                <S.VolumeProgressLine
-                  type="range"
-                  name="range"
-                />
+                <S.VolumeProgressLine type="range" name="range" />
               </S.VolumeProgress>
             </S.VolumeContent>
           </S.BarVolumeBlock>
@@ -118,4 +115,3 @@ function Bar() {
 }
 
 export default Bar
-

@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   width: 100%;
   min-height: 100%;
   overflow: hidden;
-`;
+`
 
 export const ContainerSingup = styled.div`
   max-width: 100%;
@@ -12,7 +12,7 @@ export const ContainerSingup = styled.div`
   margin: 0 auto;
   position: relative;
   background-color: rgba(0, 0, 0, 0.85);
-`;
+`
 
 export const ModlaBlock = styled.div`
   position: absolute;
@@ -20,7 +20,7 @@ export const ModlaBlock = styled.div`
   left: calc(50% - (366px / 2));
   top: calc(50% - (439px / 2));
   opacity: 1;
-`;
+`
 
 export const ModalFormLogin = styled.form`
   width: 366px;
@@ -42,7 +42,7 @@ export const ModalFormLogin = styled.form`
   & input:first-child {
     margin-bottom: 30px;
   }
-`;
+`
 
 export const ModalLogo = styled.div`
   width: 140px;
@@ -53,7 +53,7 @@ export const ModalLogo = styled.div`
     width: 140px;
     height: auto;
   }
-`;
+`
 
 export const ModalInput = styled.input`
   width: 278px;
@@ -105,7 +105,7 @@ export const ModalInput = styled.input`
     letter-spacing: -0.05px;
     color: #d0cece;
   }
-`;
+`
 
 export const ModalBtnSingupEnt = styled.button`
   width: 278px;
@@ -152,4 +152,4 @@ export const ModalBtnSingupEnt = styled.button`
     -ms-flex-pack: center;
     justify-content: center;
   }
-`;
+`

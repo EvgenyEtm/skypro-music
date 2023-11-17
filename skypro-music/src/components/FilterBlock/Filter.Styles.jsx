@@ -21,6 +21,7 @@ export const FilterContent = styled.ul`
   align-items: flex-start;
   gap: 24px;
   flex-direction: column;
+  list-style-type: none;
 `
 
 export const FilterText = styled.li`
@@ -43,7 +44,7 @@ export const FilterBlock = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
-  top: 30%;
+  top: auto;
   max-width: 220px;
   overflow: auto;
   height: 237px;

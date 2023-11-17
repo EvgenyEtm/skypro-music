@@ -9,7 +9,6 @@ function Menu ()  {
 
     function onBurgerClick () {
         setIsOpened(!isOpened)
-        console.log(isOpened);
     }
 
     return (
