@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import * as S from './Sidebar.Styles'
+import 'react-loading-skeleton/dist/skeleton.css'
 import SpriteSvg from '../../img/icon/sprite.svg'
 import img1 from '../../img/playlist01.png'
 import img2 from '../../img/playlist02.png'

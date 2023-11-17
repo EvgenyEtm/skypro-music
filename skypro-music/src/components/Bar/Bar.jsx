@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import SpriteSvg from '../../img/icon/sprite.svg'
 import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import * as S from './BarStyles'
 export const timer = 5000
 
@@ -12,6 +13,8 @@ function Bar() {
       setIsLoading(false)
     }, timer)
   }, [])
+
+  console.log(isLoading)
 
   return (
     <S.Bar>
@@ -50,9 +53,18 @@ function Bar() {
             <S.PlayerTrackPlay>
               <S.TrackPlayContain>
                 <S.TrackPlayImage>
-                  <S.TrackPlaySvg alt="music">
-                    <use xlinkHref={`${SpriteSvg}#icon-note`} />
-                  </S.TrackPlaySvg>
+                  {isLoading ? (
+                    <Skeleton
+                      width={55}
+                      height={55}
+                      baseColor="#202020"
+                      highlightColor="#444"
+                    />
+                  ) : (
+                    <S.TrackPlaySvg alt="music">
+                      <use xlinkHref={`${SpriteSvg}#icon-note`} />
+                    </S.TrackPlaySvg>
+                  )}
                 </S.TrackPlayImage>
                 <S.TrackPlayAuthor>
                   {isLoading ? (
