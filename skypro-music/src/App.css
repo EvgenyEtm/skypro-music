@@ -1,4 +1,71 @@
-.App-header {
-  color: red;
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background-color: #383838;
 }
 
+.container {
+  height: 100vh;
+  margin: 0;
+  position: relative;
+  background-color: #181818;
+}
+
+._btn-text:hover {
+  border-color: #d9b6ff;
+  color: #d9b6ff;
+  cursor: pointer;
+}
+
+._btn-icon:hover svg {
+  fill: transparent;
+  stroke: #acacac;
+  cursor: pointer;
+}
+
+._btn-text:active {
+  border-color: #ad61ff;
+  color: #ad61ff;
+  cursor: pointer;
+}
+
+._btn-icon:active svg {
+  fill: transparent;
+  stroke: #ffffff;
+  cursor: pointer;
+}
+
+._btn-icon:active .track-play__like-svg,
+._btn-icon:active .track-play__dislike-svg {
+  fill: #696969;
+  stroke: #ffffff;
+  cursor: pointer;
+}
+
+.main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  box-pack: justify;
+  justify-content: space-between;
+}
+
+
+
+.col01 {
+  width: 447px;
+}
+
+.col02 {
+  width: 321px;
+}
+
+.col03 {
+  width: 245px;
+}
+
+.col04 {
+  width: 60px;
+  text-align: end;
+}
