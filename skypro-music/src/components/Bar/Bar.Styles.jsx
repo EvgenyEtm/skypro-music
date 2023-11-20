@@ -1,4 +1,13 @@
 import styled from 'styled-components'
+import { ReactComponent as PrevSvg } from '../../img/icon/prev.svg'
+import { ReactComponent as PlaySvg } from '../../img/icon/play.svg'
+import { ReactComponent as NextSvg } from '../../img/icon/next.svg'
+import { ReactComponent as RepeatSvg } from '../../img/icon/repeat.svg'
+import { ReactComponent as ShuffleSvg } from '../../img/icon/shuffle.svg'
+import { ReactComponent as NoteSvg } from '../../img/icon/note.svg'
+import { ReactComponent as LikeSvg } from '../../img/icon/like.svg'
+import { ReactComponent as DislikeSvg } from '../../img/icon/dislike.svg'
+import { ReactComponent as VolumeSvgIcon } from '../../img/icon/volume.svg'
 
 export const Bar = styled.div`
   position: absolute;
@@ -71,36 +80,77 @@ export const PlayerBtn = styled.div`
 export const PlayerBtnPrev = styled(PlayerBtn)`
   margin-right: 23px;
 `
-export const PlayerBtnPrevSvg = styled.svg`
+export const PlayerBtnPrevSvg = styled(PrevSvg)`
   width: 15px;
   height: 14px;
+  &:hover path {
+    fill: transparent;
+    stroke: #acacac;
+    cursor: pointer;
+  }
+  &:active path {
+    fill: transparent;
+    stroke: #ffffff;
+    cursor: pointer;
+  }
 `
 export const PlayerBtnPlay = styled(PlayerBtn)`
   margin-right: 23px;
+  cursor: pointer;
 `
-export const PlayerBtnPlaySvg = styled.svg`
+export const PlayerBtnPlaySvg = styled(PlaySvg)`
   width: 22px;
   height: 20px;
   fill: #d9d9d9;
+  &:hover path {
+    fill: transparent;
+    stroke: #acacac;
+    cursor: pointer;
+  }
+  &:active path {
+    fill: transparent;
+    stroke: #ffffff;
+    cursor: pointer;
+  }
 `
 export const PlayerBtnNext = styled(PlayerBtn)`
   margin-right: 28px;
   fill: #a53939;
 `
-export const PlayerBtnNextSvg = styled.svg`
+export const PlayerBtnNextSvg = styled(NextSvg)`
   width: 15px;
   height: 14px;
   fill: inherit;
   stroke: #d9d9d9;
+  &:hover path {
+    fill: transparent;
+    stroke: #acacac;
+    cursor: pointer;
+  }
+  &:active path {
+    fill: transparent;
+    stroke: #ffffff;
+    cursor: pointer;
+  }
 `
 export const PlayerBtnRepeat = styled(PlayerBtn)`
   margin-right: 24px;
 `
-export const PlayerBtnRepeatSvg = styled.svg`
+export const PlayerBtnRepeatSvg = styled(RepeatSvg)`
   width: 18px;
   height: 12px;
   fill: transparent;
   stroke: #696969;
+  &:hover path {
+    fill: transparent;
+    stroke: #acacac;
+    cursor: pointer;
+  }
+  &:active path {
+    fill: transparent;
+    stroke: #ffffff;
+    cursor: pointer;
+  }
 `
 export const PlayerBtnShuffle = styled(PlayerBtn)`
   display: -webkit-box;
@@ -110,11 +160,17 @@ export const PlayerBtnShuffle = styled(PlayerBtn)`
   -ms-flex-align: center;
   align-items: center;
 `
-export const PlayerBtnShuffleSvg = styled.svg`
-  width: 19px;
-  height: 12px;
-  fill: transparent;
-  stroke: #696969;
+export const PlayerBtnShuffleSvg = styled(ShuffleSvg)`
+  cursor: pointer;
+  path {
+    fill: #696969;
+  }
+  &:hover path {
+    fill: #acacac;
+  }
+  &:active {
+    fill: white;
+  }
 `
 export const PlayerTrackPlay = styled.div`
   display: -webkit-box;
@@ -155,11 +211,21 @@ export const TrackPlayImage = styled.div`
   -ms-grid-column: 1;
   grid-area: image;
 `
-export const TrackPlaySvg = styled.svg`
+export const TrackPlaySvg = styled(NoteSvg)`
   width: 18px;
   height: 17px;
   fill: transparent;
   stroke: #4e4e4e;
+  &:hover path {
+    fill: transparent;
+    stroke: #acacac;
+    cursor: pointer;
+  }
+  &:active path {
+    fill: transparent;
+    stroke: #ffffff;
+    cursor: pointer;
+  }
 `
 export const TrackPlayAuthor = styled.div`
   -ms-grid-row: 1;
@@ -204,21 +270,37 @@ export const TrackPlayLikeDis = styled.div`
 export const TrackPlayLike = styled.div`
   padding: 5px;
 `
-export const TrackPlayLikeSvg = styled.svg`
-  width: 14px;
-  height: 12px;
-  fill: transparent;
-  stroke: #696969;
+export const TrackPlayLikeSvg = styled(LikeSvg)`
+  cursor: pointer;
+  path {
+    stroke: #696969;
+  }
+  &:hover path {
+    stroke: #acacac;
+  }
+
+  &:active path {
+    stroke-width: 1px;
+    stroke: #b672ff;
+    fill: #b672ff;
+  }
 `
 export const TrackPlayDislike = styled.div`
   padding: 5px;
   margin-left: 28.5px;
 `
-export const TrackPlayDislikeSvg = styled.svg`
-  width: 14.34px;
-  height: 13px;
-  fill: transparent;
-  stroke: #696969;
+export const TrackPlayDislikeSvg = styled(DislikeSvg)`
+  cursor: pointer;
+  path {
+    stroke: #696969;
+  }
+  &:hover path {
+    stroke: #acacac;
+  }
+  &:active path {
+    fill: #696969;
+    stroke: white;
+  }
 `
 export const BarVolumeBlock = styled.div`
   width: auto;
@@ -251,14 +333,27 @@ export const VolumeImage = styled.div`
   height: 18px;
   margin-right: 17px;
 `
-export const VolumeSvg = styled.div`
-  width: 13px;
-  height: 18px;
-  fill: transparent;
+export const VolumeSvg = styled(VolumeSvgIcon)`
+  cursor: pointer;
+  path {
+    stroke: #797979;
+    stroke-width: 2;
+  }
 `
+export const MuteSvg = styled.img`
+  cursor: pointer;
+  ${
+    '' /* path {
+    stroke: #797979;
+    stroke-width: 2;
+  } */
+  }
+`
+
 export const VolumeProgress = styled.div`
   width: 109px;
 `
 export const VolumeProgressLine = styled.input`
+  cursor: pointer;
   width: 109px;
 `

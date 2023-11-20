@@ -1,6 +1,5 @@
 import LoginImg from '../../img/logo_modal.png'
 import * as S from './Registration.Styles'
-// import "../Registration./Registration"
 
 function Registr() {
   ;<S.Wrapper>

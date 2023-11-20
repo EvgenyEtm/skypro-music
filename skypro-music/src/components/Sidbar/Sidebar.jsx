@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import * as S from './Sidebar.Styles'
 import 'react-loading-skeleton/dist/skeleton.css'
-import SpriteSvg from '../../img/icon/sprite.svg'
+//import SpriteSvg from '../../img/icon/sprite.svg'
 import img1 from '../../img/playlist01.png'
 import img2 from '../../img/playlist02.png'
 import img3 from '../../img/playlist03.png'
@@ -22,9 +22,7 @@ function Sidebar() {
       <S.SidebarPersonal>
         <S.SidebarPersonalName>Sergey.Ivanov</S.SidebarPersonalName>
         <S.SidebarIcon>
-          <svg alt="logout">
-            <use xlinkHref={`${SpriteSvg}#logout`}></use>
-          </svg>
+          <S.SidebarSvg alt="logout" />
         </S.SidebarIcon>
       </S.SidebarPersonal>
       <S.SidebarBlock>

@@ -1,25 +1,24 @@
-import "./App.css";
-import Bar from "./components/Bar/Bar";
-import Navigation from "./components/Navigation/Navigation.jsx";
-import Sidebar from "./components/Sidbar/Sidebar.jsx";
-import TrackList from "./components/TrackList/TrackList.jsx";
-
+import Bar from './components/Bar/Bar'
+import Navigation from './components/Navigation/Navigation.jsx'
+import Sidebar from './components/Sidbar/Sidebar.jsx'
+import TrackList from './components/TrackList/TrackList.jsx'
+import * as S from './App.Styles.jsx'
 
 function App() {
   return (
-    <div className="wrapper">
-  <div className="container">
-    <main className="main">
-        <Navigation/>
-        <TrackList/>
-        <Sidebar/>
-    </main>
-    <Bar/>
-    <footer className="footer"></footer>
-    </div>
-    </div>
-    
-);
+    <S.Wrapper>
+      <S.Container>
+        <S.GlobalStyled />
+        <S.Main>
+          <Navigation />
+          <TrackList />
+          <Sidebar />
+        </S.Main>
+        <Bar />
+        <footer className="footer"></footer>
+      </S.Container>
+    </S.Wrapper>
+  )
 }
 
-export default App;
+export default App
