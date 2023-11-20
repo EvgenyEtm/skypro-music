@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react'
-import SpriteSvg from '../../img/icon/sprite.svg'
+import MutePng from '../../img/mute.png'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import * as S from './BarStyles'
+import * as S from './Bar.Styles'
 export const timer = 5000
 
 function Bar() {
+  const [isMute, setIsMute] = useState(true)
+
+  function isMuteIcon() {
+    setIsMute(!isMute)
+  }
+
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -14,39 +20,27 @@ function Bar() {
     }, timer)
   }, [])
 
-  console.log(isLoading)
-
   return (
     <S.Bar>
       <S.BarContent>
         <S.BarPlayerProgress />
         <S.BarPlayerBlock>
-          <S.BarPlayer className="player">
+          <S.BarPlayer>
             <S.PlayerControls>
               <S.PlayerBtnPrev>
-                <S.PlayerBtnPrevSvg className="_btn-icon" alt="prev">
-                  <use xlinkHref={`${SpriteSvg}#icon-prev`} />
-                </S.PlayerBtnPrevSvg>
+                <S.PlayerBtnPrevSvg alt="prev" />
               </S.PlayerBtnPrev>
-              <S.PlayerBtnPlay className="_btn">
-                <S.PlayerBtnPlaySvg className="_btn-icon" alt="play">
-                  <use xlinkHref={`${SpriteSvg}#icon-play`} />
-                </S.PlayerBtnPlaySvg>
+              <S.PlayerBtnPlay>
+                <S.PlayerBtnPlaySvg alt="play" />
               </S.PlayerBtnPlay>
               <S.PlayerBtnNext>
-                <S.PlayerBtnNextSvg className="_btn-icon" alt="next">
-                  <use xlinkHref={`${SpriteSvg}#icon-next`} />
-                </S.PlayerBtnNextSvg>
+                <S.PlayerBtnNextSvg alt="next" />
               </S.PlayerBtnNext>
               <S.PlayerBtnRepeat>
-                <S.PlayerBtnRepeatSvg className="_btn-icon" alt="repeat">
-                  <use xlinkHref={`${SpriteSvg}#icon-repeat`} />
-                </S.PlayerBtnRepeatSvg>
+                <S.PlayerBtnRepeatSvg alt="repeat" />
               </S.PlayerBtnRepeat>
               <S.PlayerBtnShuffle>
-                <S.PlayerBtnShuffleSvg className="_btn-icon" alt="shuffle">
-                  <use xlinkHref={`${SpriteSvg}#icon-shuffle`} />
-                </S.PlayerBtnShuffleSvg>
+                <S.PlayerBtnShuffleSvg alt="shuffle" />
               </S.PlayerBtnShuffle>
             </S.PlayerControls>
 
@@ -61,9 +55,7 @@ function Bar() {
                       highlightColor="#444"
                     />
                   ) : (
-                    <S.TrackPlaySvg alt="music">
-                      <use xlinkHref={`${SpriteSvg}#icon-note`} />
-                    </S.TrackPlaySvg>
+                    <S.TrackPlaySvg alt="music" />
                   )}
                 </S.TrackPlayImage>
                 <S.TrackPlayAuthor>
@@ -96,24 +88,24 @@ function Bar() {
 
               <S.TrackPlayLikeDis>
                 <S.TrackPlayLike className="_btn-icon">
-                  <S.TrackPlayLikeSvg alt="like">
-                    <use xlinkHref={`${SpriteSvg}#icon-like`} />
-                  </S.TrackPlayLikeSvg>
+                  <S.TrackPlayLikeSvg alt="like" />
                 </S.TrackPlayLike>
                 <S.TrackPlayDislike className="_btn-icon">
-                  <S.TrackPlayDislikeSvg alt="dislike">
-                    <use xlinkHref={`${SpriteSvg}#icon-dislike`} />
-                  </S.TrackPlayDislikeSvg>
+                  <S.TrackPlayDislikeSvg alt="dislike" />
                 </S.TrackPlayDislike>
               </S.TrackPlayLikeDis>
             </S.PlayerTrackPlay>
           </S.BarPlayer>
           <S.BarVolumeBlock>
             <S.VolumeContent>
-              <S.VolumeImage>
-                <S.VolumeSvg alt="volume">
-                  <use xlinkHref={`${SpriteSvg}#icon-volume`} />
-                </S.VolumeSvg>
+              <S.VolumeImage onClick={isMuteIcon}>
+                <>
+                  {isMute ? (
+                    <S.VolumeSvg alt="volume" />
+                  ) : (
+                    <S.MuteSvg src={MutePng} alt="mute"></S.MuteSvg>
+                  )}
+                </>
               </S.VolumeImage>
               <S.VolumeProgress>
                 <S.VolumeProgressLine type="range" name="range" />
