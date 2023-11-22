@@ -3,6 +3,9 @@ import Filter, { perfomer, year, genre } from '../FilterBlock/FIlter.jsx'
 import { useState } from 'react'
 import * as S from './TrackListStyles'
 
+import { SearchBlock } from '../SearchBlock/Search.jsx'
+import { TrackBar } from '../TrackBar/TrackBar.jsx'
+
 function TrackList() {
   const [activeFilter, setActiveFilter] = useState(null)
 
@@ -11,10 +14,7 @@ function TrackList() {
   }
   return (
     <S.MainCenterblock>
-      <S.CenterblockSearch>
-        <S.SearchSvg />
-        <S.SearchText type="search" placeholder="Поиск" name="search" />
-      </S.CenterblockSearch>
+      <SearchBlock />
       <S.CenterblockSubHead>Треки</S.CenterblockSubHead>
       <S.CenterblockFilter>
         <S.FilterTitle>Искать по:</S.FilterTitle>
@@ -37,16 +37,7 @@ function TrackList() {
           action={() => changeActiveFilter('genre')}
         />
       </S.CenterblockFilter>
-      <S.CenterblockContent>
-        <S.ContentTitle>
-          <S.ContentTitleCol>Трек</S.ContentTitleCol>
-          <S.ContentTitleCol2>ИСПОЛНИТЕЛЬ</S.ContentTitleCol2>
-          <S.ContentTitleCol3>АЛЬБОМ</S.ContentTitleCol3>
-          <S.ContentTitleCol4>
-            <S.WatchSvg />
-          </S.ContentTitleCol4>
-        </S.ContentTitle>
-      </S.CenterblockContent>
+      <TrackBar />
       <Track />
     </S.MainCenterblock>
   )

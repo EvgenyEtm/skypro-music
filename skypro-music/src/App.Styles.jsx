@@ -17,12 +17,6 @@ export const GlobalStyled = createGlobalStyle`
   background-color: #383838;
 }
 
-.container {
-  height: 100vh;
-  margin: 0;
-  position: relative;
-  background-color: #181818;
-}
 
 .main {
   flex: 1 1 auto;

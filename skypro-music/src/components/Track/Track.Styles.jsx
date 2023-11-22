@@ -8,6 +8,7 @@ export const ContentPlaylist = styled.div`
   display: box;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
+  flex-direction: column;
 `
 export const PlaylistItem = styled.div`
   width: 100%;
