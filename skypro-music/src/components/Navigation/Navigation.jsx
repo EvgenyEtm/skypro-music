@@ -24,17 +24,17 @@ function Menu() {
         <S.NavMenu>
           <S.MenuList>
             <S.MenuItem>
-              <Link to="/mainpage">
+              <Link to="/">
                 <S.MenuLink>Главное</S.MenuLink>
               </Link>
             </S.MenuItem>
             <S.MenuItem>
-              <Link to="/myplaylist">
+              <Link to="/favorites">
                 <S.MenuLink>Мой плейлист</S.MenuLink>
               </Link>
             </S.MenuItem>
             <S.MenuItem>
-              <Link to="/">
+              <Link to="/login">
                 <S.MenuLink>Выйти</S.MenuLink>
               </Link>
             </S.MenuItem>

@@ -9,6 +9,12 @@ export const ContentPlaylist = styled.div`
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   flex-direction: column;
+  height: 500px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 `
 export const PlaylistItem = styled.div`
   width: 100%;

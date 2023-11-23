@@ -18,12 +18,13 @@ export const Login = () => {
               name="password"
               placeholder="Пароль"
             />
-            <Link to={'/mainpage'}>
+            <S.Separator />
+            <Link to={'/'}>
               <S.ModalBtnEnter>
                 <p>Войти</p>
               </S.ModalBtnEnter>
             </Link>
-            <Link to="/registration">
+            <Link to="/register">
               <S.ModalBtnSignUp>
                 <p>Зарегистрироваться</p>
               </S.ModalBtnSignUp>

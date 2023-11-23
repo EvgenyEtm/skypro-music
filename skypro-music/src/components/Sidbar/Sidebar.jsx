@@ -19,12 +19,12 @@ function Sidebar() {
   }, [])
 
   return (
-    <S.MainSidebar className="sidebar">
+    <S.MainSidebar>
       <Logout />
       <S.SidebarBlock>
         <S.SidebarList>
           <S.SidebarItem>
-            <S.SidebarLink href="#">
+            <S.SidebarLink>
               {isLoading ? (
                 <Skeleton
                   width={250}
@@ -33,7 +33,7 @@ function Sidebar() {
                   highlightColor="#444"
                 />
               ) : (
-                <Link to="/playlistoftheday">
+                <Link to={`/category/1`}>
                   <S.SidebarImg src={img1} alt="day's playlist" />
                 </Link>
               )}
@@ -49,14 +49,14 @@ function Sidebar() {
                   highlightColor="#444"
                 />
               ) : (
-                <Link to="/hundredhits">
+                <Link to={`/category/2`}>
                   <S.SidebarImg src={img2} alt="day's playlist" />
                 </Link>
               )}
             </S.SidebarLink>
           </S.SidebarItem>
           <S.SidebarItem>
-            <S.SidebarLink href="#">
+            <S.SidebarLink>
               {isLoading ? (
                 <Skeleton
                   width={250}
@@ -65,7 +65,7 @@ function Sidebar() {
                   highlightColor="#444"
                 />
               ) : (
-                <Link to="/indicharge">
+                <Link to={`/category/3`}>
                   <S.SidebarImg src={img3} alt="day's playlist" />
                 </Link>
               )}

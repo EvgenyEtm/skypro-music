@@ -31,7 +31,7 @@ export function Registr() {
               name="password"
               placeholder="Повторите пароль"
             />
-            <Link to="/">
+            <Link to="/login">
               <S.ModalBtnSingupEnt>
                 <p>Зарегистрироваться</p>
               </S.ModalBtnSingupEnt>

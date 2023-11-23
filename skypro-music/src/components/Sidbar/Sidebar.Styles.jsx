@@ -73,7 +73,7 @@ export const SidebarItem = styled.div`
     margin-bottom: 30px;
   }
 `
-export const SidebarLink = styled.a`
+export const SidebarLink = styled.div`
   width: 100%;
   height: 100%;
 `

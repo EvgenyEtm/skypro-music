@@ -6,7 +6,7 @@ export const Logout = () => {
     <S.SidebarPersonal>
       <S.SidebarPersonalName>Sergey.Ivanov</S.SidebarPersonalName>
       <S.SidebarIcon>
-        <Link to="/">
+        <Link to="/login">
           <S.SidebarSvg alt="logout" />
         </Link>
       </S.SidebarIcon>

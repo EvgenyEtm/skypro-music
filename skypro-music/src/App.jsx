@@ -1,13 +1,10 @@
-// import Bar from './components/Bar/Bar'
-// import Navigation from './components/Navigation/Navigation.jsx'
-// import Sidebar from './components/Sidbar/Sidebar.jsx'
-// import TrackList from './components/TrackList/TrackList.jsx'
 import * as S from './App.Styles.jsx'
 import { AppRoutes } from './routes.jsx'
-// import { useState } from 'react'
 
 function App() {
-  const user = true
+  localStorage.setItem('token', true)
+  let user = localStorage.getItem('token')
+  console.log(localStorage)
   return (
     <S.Container>
       <S.GlobalStyled />
@@ -17,21 +14,3 @@ function App() {
 }
 
 export default App
-
-// function App() {
-//   return (
-//     <S.Wrapper>
-//       <S.Container>
-//         <S.GlobalStyled />
-//         <S.Main>
-//           <Navigation />
-//           <TrackList />
-//           <Sidebar />
-//         </S.Main>
-//         <Bar />
-//         <AppRoutes />
-//         <footer className="footer"></footer>
-//       </S.Container>
-//     </S.Wrapper>
-//   )
-// }
