@@ -10,6 +10,10 @@ function Menu() {
     setIsOpened(!isOpened)
   }
 
+  const logout = () => {
+    localStorage.clear()
+  }
+
   return (
     <S.MainNav>
       <S.NavLogo>
@@ -35,7 +39,7 @@ function Menu() {
             </S.MenuItem>
             <S.MenuItem>
               <Link to="/login">
-                <S.MenuLink>Выйти</S.MenuLink>
+                <S.MenuLink onClick={logout}>Выйти</S.MenuLink>
               </Link>
             </S.MenuItem>
           </S.MenuList>

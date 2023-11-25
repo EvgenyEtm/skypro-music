@@ -1,7 +1,17 @@
 import * as S from './Login.Styles'
 import { Link } from 'react-router-dom'
 import LoginImg from '../../img/logo_modal.png'
+import { useState } from 'react'
+
 export const Login = () => {
+  const [user, setUser] = useState(false)
+  function userLogin() {
+    localStorage.setItem('token', true)
+    const token = localStorage.getItem('token')
+    setUser(token)
+    console.log(user)
+  }
+  console.log(localStorage)
   return (
     <S.Wrapper>
       <S.ContainerEnter>
@@ -20,7 +30,7 @@ export const Login = () => {
             />
             <S.Separator />
             <Link to={'/'}>
-              <S.ModalBtnEnter>
+              <S.ModalBtnEnter onClick={userLogin}>
                 <p>Войти</p>
               </S.ModalBtnEnter>
             </Link>
@@ -35,3 +45,5 @@ export const Login = () => {
     </S.Wrapper>
   )
 }
+
+console.log(localStorage)
