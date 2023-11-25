@@ -1,25 +1,22 @@
-import "./App.css";
-import Bar from "./components/Bar/Bar";
-import Navigation from "./components/Navigation/Navigation.jsx";
-import Sidebar from "./components/Sidbar/Sidebar.jsx";
-import TrackList from "./components/TrackList/TrackList.jsx";
-
+// import { useState } from 'react'
+import * as S from './App.Styles.jsx'
+import { AppRoutes } from './routes.jsx'
 
 function App() {
+  // const [user, setUser] = useState(false)
+  // function userLogin() {
+  //   localStorage.setItem('token', true)
+  //   const token = localStorage.getItem('token')
+  //   setUser(token)
+  // }
+
   return (
-    <div className="wrapper">
-  <div className="container">
-    <main className="main">
-        <Navigation/>
-        <TrackList/>
-        <Sidebar/>
-    </main>
-    <Bar/>
-    <footer className="footer"></footer>
-    </div>
-    </div>
-    
-);
+    <S.Container>
+      <S.GlobalStyled />
+      <AppRoutes />
+    </S.Container>
+  )
 }
 
-export default App;
+export default App
+console.log(localStorage)

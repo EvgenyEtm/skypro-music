@@ -1,8 +1,10 @@
 import Track from '../Track/Track.jsx'
-import SpriteSvg from '../../img/icon/sprite.svg'
 import Filter, { perfomer, year, genre } from '../FilterBlock/FIlter.jsx'
 import { useState } from 'react'
 import * as S from './TrackListStyles'
+
+import { SearchBlock } from '../SearchBlock/Search.jsx'
+import { TrackBar } from '../TrackBar/TrackBar.jsx'
 
 function TrackList() {
   const [activeFilter, setActiveFilter] = useState(null)
@@ -11,15 +13,10 @@ function TrackList() {
     setActiveFilter(activeFilter === newFilter ? null : newFilter)
   }
   return (
-    <S.MainCenterblock className="centerblock">
-      <S.CenterblockSearch className="search">
-        <S.SearchSvg>
-          <use xlinkHref={`${SpriteSvg}#icon-search`}></use>
-        </S.SearchSvg>
-        <S.SearchText type="search" placeholder="Поиск" name="search" />
-      </S.CenterblockSearch>
-      <S.CenterblockH2>Треки</S.CenterblockH2>
-      <S.CenterblockFilter className="filter">
+    <S.MainCenterblock>
+      <SearchBlock />
+      <S.CenterblockSubHead>Треки</S.CenterblockSubHead>
+      <S.CenterblockFilter>
         <S.FilterTitle>Искать по:</S.FilterTitle>
         <Filter
           filterName={'исполнителю'}
@@ -40,18 +37,7 @@ function TrackList() {
           action={() => changeActiveFilter('genre')}
         />
       </S.CenterblockFilter>
-      <S.CenterblockContent>
-        <S.ContentTitle className="playlist-title">
-          <S.ContentTitleCol className="col01">Трек</S.ContentTitleCol>
-          <S.ContentTitleCol2 className="col02">ИСПОЛНИТЕЛЬ</S.ContentTitleCol2>
-          <S.ContentTitleCol className="col03">АЛЬБОМ</S.ContentTitleCol>
-          <S.ContentTitleCol className="col04">
-            <S.PlaylistTitleSvg alt="time">
-              <use xlinkHref={`${SpriteSvg}#icon-watch`}></use>
-            </S.PlaylistTitleSvg>
-          </S.ContentTitleCol>
-        </S.ContentTitle>
-      </S.CenterblockContent>
+      <TrackBar />
       <Track />
     </S.MainCenterblock>
   )
