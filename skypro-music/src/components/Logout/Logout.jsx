@@ -1,9 +1,10 @@
 import * as S from './Logout.Styled'
 import { Link } from 'react-router-dom'
 
-export const Logout = () => {
+export const Logout = ({ setSingles }) => {
   const logout = () => {
     localStorage.clear()
+    setSingles(null)
   }
   return (
     <S.SidebarPersonal>

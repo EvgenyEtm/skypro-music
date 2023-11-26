@@ -4,10 +4,12 @@ import { IndiCharge } from './IndiCharge'
 import { PlaylistOfTheDay } from './PlayListOfTheDay'
 import Track from '../../components/Track/Track'
 import * as S from '../../App.Styles'
+import TrackList from '../../components/TrackList/TrackList'
+import { Bar } from '../../components/Bar/Bar.Styles'
 
-export function FavoriteCategory() {
+export function FavoriteCategory({ setSingles, arrayTrack }) {
   const { id } = useParams()
-  console.log(id)
+
   return (
     <>
       {id === '1' ? (
@@ -15,7 +17,11 @@ export function FavoriteCategory() {
           <S.Wrapper>
             <S.Container>
               <S.GlobalStyled />
-              <Track />
+              <S.MainCenterblock>
+                <TrackList />
+                <Track setSingles={setSingles} arrayTrack={arrayTrack} />
+              </S.MainCenterblock>
+              <Bar />
               <HundredHits />
             </S.Container>
           </S.Wrapper>

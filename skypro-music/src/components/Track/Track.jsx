@@ -4,11 +4,12 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import * as S from './Track.Styles'
 import { timer } from '../Bar/Bar'
-import { TrackMassive } from '../Trackmassive/trackMassive'
+// import { TrackMassive } from '../Trackmassive/trackMassive'
+// import { getTracks } from '../../Api'
 
-export const Track = ({ tracks }) => {
+export const Track = ({ setSingles, arrayTrack }) => {
   const [isLoading, setIsLoading] = useState(true)
-  tracks = TrackMassive
+
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)
@@ -17,8 +18,8 @@ export const Track = ({ tracks }) => {
 
   return (
     <S.ContentPlaylist>
-      {tracks.map((track) => (
-        <S.PlaylistItem key={track.id}>
+      {arrayTrack.map((track) => (
+        <S.PlaylistItem key={track.id} onClick={() => setSingles(track)}>
           <S.PlaylistTrack>
             <S.TrackTitle>
               <S.TrackTitleImage>
@@ -41,8 +42,8 @@ export const Track = ({ tracks }) => {
                     highlightColor="#444"
                   />
                 ) : (
-                  <S.TrackTitleLink href="http://">
-                    {track.trackTitleLink.title}{' '}
+                  <S.TrackTitleLink>
+                    {track.name}
                     <S.TrackTitleSpan></S.TrackTitleSpan>
                   </S.TrackTitleLink>
                 )}
@@ -56,9 +57,7 @@ export const Track = ({ tracks }) => {
                   highlightColor="#444"
                 />
               ) : (
-                <S.TrackAuthorLink href="http://">
-                  {track.trackAuthorLink}
-                </S.TrackAuthorLink>
+                <S.TrackAuthorLink>{track.author}</S.TrackAuthorLink>
               )}
             </S.TrackAuthor>
             <S.TrackAlbum>
@@ -69,9 +68,7 @@ export const Track = ({ tracks }) => {
                   highlightColor="#444"
                 />
               ) : (
-                <S.TrackAlbumLink href="http://">
-                  {track.trackAlbumLink}
-                </S.TrackAlbumLink>
+                <S.TrackAlbumLink>{track.album}</S.TrackAlbumLink>
               )}
             </S.TrackAlbum>
             <S.TrackTime>
@@ -84,7 +81,7 @@ export const Track = ({ tracks }) => {
               ) : (
                 <>
                   <S.TrackTimeSvg alt="time" />
-                  <S.TrackTimeText>{track.trackTimeText}</S.TrackTimeText>
+                  <S.TrackTimeText>{track.duration_in_seconds}</S.TrackTimeText>
                 </>
               )}
             </S.TrackTime>
