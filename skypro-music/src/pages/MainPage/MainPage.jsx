@@ -6,7 +6,13 @@ import * as S from '../../App.Styles.jsx'
 import Track from '../../components/Track/Track.jsx'
 import { Logout } from '../../components/Logout/Logout.jsx'
 
-export const MainPage = ({ singles, setSingles, arrayTrack }) => {
+export const MainPage = ({
+  setIsLoadind,
+  singles,
+  setSingles,
+  arrayTrack,
+  isLoadind,
+}) => {
   console.log(singles)
 
   return (
@@ -14,13 +20,17 @@ export const MainPage = ({ singles, setSingles, arrayTrack }) => {
       <S.Container>
         <S.GlobalStyled />
         <S.Main>
-          <Navigation setSingles={setSingles} />
+          <Navigation setSingles={setSingles} setIsLoadind={setIsLoadind} />
           <S.MainCenterblock>
             <TrackList />
-            <Track setSingles={setSingles} arrayTrack={arrayTrack} />
+            <Track
+              setSingles={setSingles}
+              arrayTrack={arrayTrack}
+              isLoadind={isLoadind}
+            />
           </S.MainCenterblock>
           <S.MainCenterblock>
-            <Logout setSingles={setSingles} />
+            <Logout setSingles={setSingles} setIsLoadind={setIsLoadind} />
             <Sidebar />
           </S.MainCenterblock>
         </S.Main>

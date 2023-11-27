@@ -3,16 +3,17 @@ import Logo from '../../img/logo.png'
 import * as S from './Navigation.Styles'
 import { Link } from 'react-router-dom'
 
-function Menu({ setSingles }) {
+function Menu({ setSingles, setIsLoadind }) {
   const [isOpened, setIsOpened] = useState(false)
 
   function onBurgerClick() {
     setIsOpened(!isOpened)
   }
 
-  const logout = () => {
+  const logoutButton = () => {
     localStorage.clear()
     setSingles(null)
+    setIsLoadind(null)
   }
 
   return (
@@ -40,7 +41,7 @@ function Menu({ setSingles }) {
             </S.MenuItem>
             <S.MenuItem>
               <Link to="/login">
-                <S.MenuLink onClick={logout}>Выйти</S.MenuLink>
+                <S.MenuLink onClick={logoutButton}>Выйти</S.MenuLink>
               </Link>
             </S.MenuItem>
           </S.MenuList>

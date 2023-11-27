@@ -7,7 +7,7 @@ import * as S from '../../App.Styles'
 import TrackList from '../../components/TrackList/TrackList'
 import { Bar } from '../../components/Bar/Bar.Styles'
 
-export function FavoriteCategory({ setSingles, arrayTrack }) {
+export function FavoriteCategory({ setSingles, arrayTrack, isLoadind }) {
   const { id } = useParams()
 
   return (
@@ -19,7 +19,11 @@ export function FavoriteCategory({ setSingles, arrayTrack }) {
               <S.GlobalStyled />
               <S.MainCenterblock>
                 <TrackList />
-                <Track setSingles={setSingles} arrayTrack={arrayTrack} />
+                <Track
+                  isLoadind={isLoadind}
+                  setSingles={setSingles}
+                  arrayTrack={arrayTrack}
+                />
               </S.MainCenterblock>
               <Bar />
               <HundredHits />

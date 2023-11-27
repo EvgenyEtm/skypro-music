@@ -13,6 +13,8 @@ export const AppRoutes = ({
   setSingles,
   arrayTrack,
   setArrayTrack,
+  isLoadind,
+  setIsLoadind,
 }) => {
   console.log(localStorage)
   return (
@@ -28,6 +30,8 @@ export const AppRoutes = ({
               setSingles={setSingles}
               setArrayTrack={setArrayTrack}
               arrayTrack={arrayTrack}
+              isLoadind={isLoadind}
+              setIsLoadind={setIsLoadind}
             />
           }
         />
@@ -38,6 +42,8 @@ export const AppRoutes = ({
               singles={singles}
               arrayTrack={arrayTrack}
               setArrayTrack={setArrayTrack}
+              isLoadind={isLoadind}
+              setIsLoadind={setIsLoadind}
               setSingles={setSingles}
             />
           }
@@ -45,7 +51,11 @@ export const AppRoutes = ({
         <Route
           path="/category/:id"
           element={
-            <FavoriteCategory arrayTrack={arrayTrack} setSingles={setSingles} />
+            <FavoriteCategory
+              arrayTrack={arrayTrack}
+              setSingles={setSingles}
+              isLoadind={isLoadind}
+            />
           }
         />
       </Route>

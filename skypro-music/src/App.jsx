@@ -12,16 +12,19 @@ function App() {
   // }
   const [singles, setSingles] = useState('')
   const [arrayTrack, setArrayTrack] = useState([])
-
+  const [isLoadind, setIsLoadind] = useState(null)
   useEffect(() => {
     async function getAllTracks() {
       try {
         const setResponse = await getTracks()
         console.log(setResponse)
-
+        setIsLoadind(null)
         setArrayTrack(setResponse)
       } catch (error) {
         console.warn(error.message)
+        setIsLoadind(
+          `${error.message}, Ошибка сервера, повторите запрос позднее.`,
+        )
       }
     }
     getAllTracks()
@@ -35,6 +38,8 @@ function App() {
         setSingles={setSingles}
         arrayTrack={arrayTrack}
         setArrayTrack={setArrayTrack}
+        isLoadind={isLoadind}
+        setIsLoadind={setIsLoadind}
       />
     </S.Container>
   )
