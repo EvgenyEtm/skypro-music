@@ -8,6 +8,14 @@ import { ReactComponent as NoteSvg } from '../../img/icon/note.svg'
 import { ReactComponent as LikeSvg } from '../../img/icon/like.svg'
 import { ReactComponent as DislikeSvg } from '../../img/icon/dislike.svg'
 import { ReactComponent as VolumeSvgIcon } from '../../img/icon/volume.svg'
+import { ReactComponent as PauseSvg } from '../../img/icon/pause.svg'
+
+//  {
+//   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="19" viewBox="0 0 15 19" fill="none">
+//   <rect width="5" height="19" fill="#D9D9D9"/>
+//   <rect x="10" width="5" height="19" fill="#D9D9D9"/>
+// </svg>
+//  }
 
 export const Bar = styled.div`
   position: absolute;
@@ -113,6 +121,24 @@ export const PlayerBtnPlaySvg = styled(PlaySvg)`
     cursor: pointer;
   }
 `
+
+export const PlayerBtnPauseSvg = styled(PauseSvg)`
+  width: 22px;
+  height: 20px;
+  cursor: pointer;
+  fill: #d9d9d9;
+  &:hover path {
+    fill: transparent;
+    stroke: #acacac;
+    ${'' /* cursor: pointer; */}
+  }
+  &:active {
+    fill: transparent;
+    stroke: #ffffff;
+    ${'' /* cursor: pointer; */}
+  }
+`
+
 export const PlayerBtnNext = styled(PlayerBtn)`
   margin-right: 28px;
   fill: #a53939;
@@ -136,6 +162,15 @@ export const PlayerBtnNextSvg = styled(NextSvg)`
 export const PlayerBtnRepeat = styled(PlayerBtn)`
   margin-right: 24px;
 `
+
+export const PlayerBntRepeatSvgActive = styled(RepeatSvg)`
+  width: 18px;
+  height: 12px;
+  fill: transparent;
+  stroke: #ffffff;
+  cursor: pointer;
+`
+
 export const PlayerBtnRepeatSvg = styled(RepeatSvg)`
   width: 18px;
   height: 12px;

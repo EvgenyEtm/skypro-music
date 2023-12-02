@@ -87,7 +87,12 @@ export const Track = ({ setSingles, arrayTrack, isLoadind }) => {
                     <>
                       <S.TrackTimeSvg alt="time" />
                       <S.TrackTimeText>
-                        {track.duration_in_seconds}
+                        {Math.floor(track.duration_in_seconds / 60) < 10
+                          ? `0${Math.floor(track.duration_in_seconds / 60)}`
+                          : Math.floor(track.duration_in_seconds / 60)}{' '}
+                        {Math.floor(track.duration_in_seconds % 60) < 9
+                          ? `0${Math.floor(track.duration_in_seconds % 60)}`
+                          : Math.floor(track.duration_in_seconds % 60)}
                       </S.TrackTimeText>
                     </>
                   )}

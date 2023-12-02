@@ -9,7 +9,7 @@ export const ContentPlaylist = styled.div`
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   flex-direction: column;
-  height: 500px;
+  height: 600px;
   overflow-y: scroll;
   scrollbar-width: none;
   &::-webkit-scrollbar {

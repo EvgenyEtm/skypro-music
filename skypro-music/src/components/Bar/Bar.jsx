@@ -1,15 +1,55 @@
 import { useEffect, useState } from 'react'
-import MutePng from '../../img/mute.png'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import * as S from './Bar.Styles'
+import React from 'react'
+import ProgressBar from './ProgressBar'
+import { VolumeControl } from './VolumeControl'
 export const timer = 1000
 
 function Bar({ singles }) {
-  const [isMute, setIsMute] = useState(true)
-  console.log(singles)
-  function isMuteIcon() {
-    setIsMute(!isMute)
+  const [repeatTrack, setRepeatTrack] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true)
+  const [timeProgress, setTimeProgress] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const audioRef = React.useRef(null)
+
+  // useEffect(() => {
+  //   singles ? (audioRef.current.autoplay = true) : null
+  // }, [])
+
+  const useRepeat = () => {
+    console.log(repeatTrack)
+    if (repeatTrack === true) {
+      return setRepeatTrack(false), (audioRef.current.loop = false)
+    }
+    if (repeatTrack === false) {
+      return setRepeatTrack(true), (audioRef.current.loop = true)
+    }
+  }
+  const handleStart = () => {
+    audioRef.current.play()
+    setIsPlaying(true)
+  }
+
+  const handleStop = () => {
+    audioRef.current.pause()
+    setIsPlaying(false)
+  }
+  const togglePlay = isPlaying ? handleStop : handleStart
+
+  useEffect(() => {
+    if (isPlaying && singles) {
+      audioRef.current.play()
+      setIsPlaying(true)
+    }
+  }, [isPlaying, singles, audioRef])
+
+  const onLoadedMetadata = () => {
+    setDuration(audioRef.current.duration)
+  }
+  const onTimeUpdate = () => {
+    setTimeProgress(audioRef.current.currentTime)
   }
 
   const [isLoading, setIsLoading] = useState(true)
@@ -24,8 +64,23 @@ function Bar({ singles }) {
     <>
       {singles ? (
         <S.Bar>
+          <audio
+            src={singles.track_file}
+            ref={audioRef}
+            onTimeUpdate={onTimeUpdate}
+            onLoadedMetadata={onLoadedMetadata}
+            style={{ display: 'none' }}
+          >
+            {/* <source src={singles.track_file} /> */}
+          </audio>
           <S.BarContent>
-            <S.BarPlayerProgress />
+            <ProgressBar
+              onProgress="timeProgress"
+              duration={duration}
+              timeProgress={timeProgress}
+              audioRef={audioRef}
+            />
+            {/* <S.BarPlayerProgress /> */}
             <S.BarPlayerBlock>
               <S.BarPlayer>
                 <S.PlayerControls>
@@ -33,13 +88,21 @@ function Bar({ singles }) {
                     <S.PlayerBtnPrevSvg alt="prev" />
                   </S.PlayerBtnPrev>
                   <S.PlayerBtnPlay>
-                    <S.PlayerBtnPlaySvg alt="play" />
+                    {isPlaying ? (
+                      <S.PlayerBtnPauseSvg onClick={togglePlay} alt="pause" />
+                    ) : (
+                      <S.PlayerBtnPlaySvg onClick={togglePlay} alt="play" />
+                    )}
                   </S.PlayerBtnPlay>
                   <S.PlayerBtnNext>
                     <S.PlayerBtnNextSvg alt="next" />
                   </S.PlayerBtnNext>
-                  <S.PlayerBtnRepeat>
-                    <S.PlayerBtnRepeatSvg alt="repeat" />
+                  <S.PlayerBtnRepeat onClick={useRepeat}>
+                    {repeatTrack ? (
+                      <S.PlayerBntRepeatSvgActive alt="repeat" />
+                    ) : (
+                      <S.PlayerBtnRepeatSvg alt="repeat" />
+                    )}
                   </S.PlayerBtnRepeat>
                   <S.PlayerBtnShuffle>
                     <S.PlayerBtnShuffleSvg alt="shuffle" />
@@ -98,22 +161,7 @@ function Bar({ singles }) {
                   </S.TrackPlayLikeDis>
                 </S.PlayerTrackPlay>
               </S.BarPlayer>
-              <S.BarVolumeBlock>
-                <S.VolumeContent>
-                  <S.VolumeImage onClick={isMuteIcon}>
-                    <>
-                      {isMute ? (
-                        <S.VolumeSvg alt="volume" />
-                      ) : (
-                        <S.MuteSvg src={MutePng} alt="mute"></S.MuteSvg>
-                      )}
-                    </>
-                  </S.VolumeImage>
-                  <S.VolumeProgress>
-                    <S.VolumeProgressLine type="range" name="range" />
-                  </S.VolumeProgress>
-                </S.VolumeContent>
-              </S.BarVolumeBlock>
+              <VolumeControl audioRef={audioRef} />
             </S.BarPlayerBlock>
           </S.BarContent>
         </S.Bar>
