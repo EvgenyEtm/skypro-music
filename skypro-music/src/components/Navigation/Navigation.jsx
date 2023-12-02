@@ -1,12 +1,19 @@
 import { useState } from 'react'
 import Logo from '../../img/logo.png'
 import * as S from './Navigation.Styles'
+import { Link } from 'react-router-dom'
 
-function Menu() {
+function Menu({ setSingles, setIsLoadind }) {
   const [isOpened, setIsOpened] = useState(false)
 
   function onBurgerClick() {
     setIsOpened(!isOpened)
+  }
+
+  const logoutButton = () => {
+    localStorage.clear()
+    setSingles(null)
+    setIsLoadind(null)
   }
 
   return (
@@ -23,13 +30,19 @@ function Menu() {
         <S.NavMenu>
           <S.MenuList>
             <S.MenuItem>
-              <S.MenuLink href="http://">Главное</S.MenuLink>
+              <Link to="/">
+                <S.MenuLink>Главное</S.MenuLink>
+              </Link>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink href="http://">Мой плейлист</S.MenuLink>
+              <Link to="/favorites">
+                <S.MenuLink>Мой плейлист</S.MenuLink>
+              </Link>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink href="http://">Войти</S.MenuLink>
+              <Link to="/login">
+                <S.MenuLink onClick={logoutButton}>Выйти</S.MenuLink>
+              </Link>
             </S.MenuItem>
           </S.MenuList>
         </S.NavMenu>

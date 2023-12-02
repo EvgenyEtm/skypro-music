@@ -1,38 +1,49 @@
-import LoginImg from "../../img/logo_modal.png";
-import * as S from './Login.Styles';
+import * as S from './Login.Styles'
+import { Link } from 'react-router-dom'
+import LoginImg from '../../img/logo_modal.png'
+import { useState } from 'react'
 
-function Login () {
+export const Login = () => {
+  const [user, setUser] = useState(false)
+  function userLogin() {
+    localStorage.setItem('token', true)
+    const token = localStorage.getItem('token')
+    setUser(token)
+    console.log(user)
+  }
+  console.log(localStorage)
+  return (
     <S.Wrapper>
       <S.ContainerEnter>
         <S.ModalBlock>
           <S.ModalFormLogin action="#">
             <a href="../">
               <S.ModalLogo>
-                <img src={LoginImg} alt="logo"/>
+                <img src={LoginImg} alt="logo" />
               </S.ModalLogo>
             </a>
+            <S.ModalInput type="text" name="login" placeholder="Почта" />
             <S.ModalInput
-              className="login"
-              type="text"
-              name="login"
-              placeholder="Почта"
-            />
-            <S.ModalInput
-              className="password"
               type="password"
               name="password"
               placeholder="Пароль"
             />
-            <S.ModalBtnEnter>
-              <a href="../index.html">Войти</a>
-            </S.ModalBtnEnter>
-            <S.ModalBtnSignUp>
-              <a href="signup.html">Зарегистрироваться</a>
-            </S.ModalBtnSignUp>
+            <S.Separator />
+            <Link to={'/'}>
+              <S.ModalBtnEnter onClick={userLogin}>
+                <p>Войти</p>
+              </S.ModalBtnEnter>
+            </Link>
+            <Link to="/register">
+              <S.ModalBtnSignUp>
+                <p>Зарегистрироваться</p>
+              </S.ModalBtnSignUp>
+            </Link>
           </S.ModalFormLogin>
         </S.ModalBlock>
       </S.ContainerEnter>
     </S.Wrapper>
+  )
 }
 
-export default Login;
+console.log(localStorage)

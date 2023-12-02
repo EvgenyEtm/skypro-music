@@ -1,25 +1,49 @@
-import "./App.css";
-import Bar from "./components/Bar/Bar";
-import Navigation from "./components/Navigation/Navigation.jsx";
-import Sidebar from "./components/Sidbar/Sidebar.jsx";
-import TrackList from "./components/TrackList/TrackList.jsx";
-
+import { useState, useEffect } from 'react'
+import * as S from './App.Styles.jsx'
+import { AppRoutes } from './routes.jsx'
+import { getTracks } from './Api.jsx'
 
 function App() {
+  // const [user, setUser] = useState(false)
+  // function userLogin() {
+  //   localStorage.setItem('token', true)
+  //   const token = localStorage.getItem('token')
+  //   setUser(token)
+  // }
+  const [singles, setSingles] = useState('')
+  const [arrayTrack, setArrayTrack] = useState([])
+  const [isLoadind, setIsLoadind] = useState(null)
+  useEffect(() => {
+    async function getAllTracks() {
+      try {
+        const setResponse = await getTracks()
+        console.log(setResponse)
+        setIsLoadind(null)
+        setArrayTrack(setResponse)
+      } catch (error) {
+        console.warn(error.message)
+        setIsLoadind(
+          `${error.message}, Ошибка сервера, повторите запрос позднее.`,
+        )
+      }
+    }
+    getAllTracks()
+  }, [])
+
   return (
-    <div className="wrapper">
-  <div className="container">
-    <main className="main">
-        <Navigation/>
-        <TrackList/>
-        <Sidebar/>
-    </main>
-    <Bar/>
-    <footer className="footer"></footer>
-    </div>
-    </div>
-    
-);
+    <S.Container>
+      <S.GlobalStyled />
+      <AppRoutes
+        singles={singles}
+        setSingles={setSingles}
+        arrayTrack={arrayTrack}
+        setArrayTrack={setArrayTrack}
+        isLoadind={isLoadind}
+        setIsLoadind={setIsLoadind}
+      />
+    </S.Container>
+  )
 }
 
-export default App;
+export default App
+console.log(localStorage)

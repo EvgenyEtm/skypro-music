@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { ReactComponent as LogoutSvg } from '../../img/icon/logout.svg'
 
 export const MainSidebar = styled.div`
   max-width: 418px;
@@ -29,12 +30,15 @@ export const SidebarPersonalName = styled.p`
   margin-right: 16px;
 `
 export const SidebarIcon = styled.div`
-  width: 43px;
-  height: 43px;
+  width: 40px;
+  height: 40px;
   background-color: #313131;
   border-radius: 50%;
   cursor: pointer;
+  padding-left: 11px;
+  padding-top: 11px;
 `
+export const SidebarSvg = styled(LogoutSvg)``
 export const SidebarBlock = styled.div`
   height: 100%;
   padding: 240px 0 0 0;
@@ -69,7 +73,7 @@ export const SidebarItem = styled.div`
     margin-bottom: 30px;
   }
 `
-export const SidebarLink = styled.a`
+export const SidebarLink = styled.div`
   width: 100%;
   height: 100%;
 `
