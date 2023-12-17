@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
-//import SpriteSvg from '../../img/icon/sprite.svg'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import * as S from './Track.Styles'
 import { timer } from '../Bar/Bar'
-// import { TrackMassive } from '../Trackmassive/trackMassive'
-// import { getTracks } from '../../Api'
+import { useUserContext } from '../../context/UserContext'
 
-export const Track = ({ setSingles, arrayTrack, isLoadind }) => {
+export const Track = () => {
   const [isLoading, setIsLoading] = useState(true)
+  const { isLoadind, setSingles, arrayTrack } = useUserContext()
 
   useEffect(() => {
     setTimeout(() => {

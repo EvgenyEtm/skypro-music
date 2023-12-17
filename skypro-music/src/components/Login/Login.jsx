@@ -2,16 +2,47 @@ import * as S from './Login.Styles'
 import { Link } from 'react-router-dom'
 import LoginImg from '../../img/logo_modal.png'
 import { useState } from 'react'
+import { login } from '../../Api'
 
-export const Login = () => {
+export const Login = ({ setUsername }) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(false)
-  function userLogin() {
+
+  const handleLogin = async () => {
     localStorage.setItem('token', true)
     const token = localStorage.getItem('token')
     setUser(token)
     console.log(user)
+    console.log('1')
+    try {
+      console.log('2')
+      if (email && password) {
+        const response = await login(email, password)
+        console.log(response.username)
+        setUsername(response.username)
+      }
+      if (!email) {
+        console.error('не введен email')
+      }
+      if (!password) {
+        console.error('не введен password')
+      }
+    } catch (error) {
+      console.warn(error.message)
+    }
+    // alert(`Выполняется вход: ${email} ${password}`)
+    // setError('Неизвестная ошибка входа')
   }
-  console.log(localStorage)
+
+  // function userLogin() {
+  //   localStorage.setItem('token', true)
+  //   const token = localStorage.getItem('token')
+  //   setUser(token)
+  //   console.log(user)
+
+  // }
+  // console.log(localStorage)
   return (
     <S.Wrapper>
       <S.ContainerEnter>
@@ -22,15 +53,27 @@ export const Login = () => {
                 <img src={LoginImg} alt="logo" />
               </S.ModalLogo>
             </a>
-            <S.ModalInput type="text" name="login" placeholder="Почта" />
+            <S.ModalInput
+              type="text"
+              name="login"
+              placeholder="Почта"
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value)
+              }}
+            />
             <S.ModalInput
               type="password"
               name="password"
               placeholder="Пароль"
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value)
+              }}
             />
             <S.Separator />
             <Link to={'/'}>
-              <S.ModalBtnEnter onClick={userLogin}>
+              <S.ModalBtnEnter onClick={handleLogin}>
                 <p>Войти</p>
               </S.ModalBtnEnter>
             </Link>
@@ -45,5 +88,3 @@ export const Login = () => {
     </S.Wrapper>
   )
 }
-
-console.log(localStorage)

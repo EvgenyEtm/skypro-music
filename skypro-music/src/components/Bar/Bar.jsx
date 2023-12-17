@@ -5,18 +5,16 @@ import * as S from './Bar.Styles'
 import React from 'react'
 import ProgressBar from './ProgressBar'
 import { VolumeControl } from './VolumeControl'
+import { useUserContext } from '../../context/UserContext'
 export const timer = 1000
 
-function Bar({ singles }) {
+function Bar() {
   const [repeatTrack, setRepeatTrack] = useState(false)
   const [isPlaying, setIsPlaying] = useState(true)
   const [timeProgress, setTimeProgress] = useState(0)
   const [duration, setDuration] = useState(0)
   const audioRef = React.useRef(null)
-
-  // useEffect(() => {
-  //   singles ? (audioRef.current.autoplay = true) : null
-  // }, [])
+  const { singles } = useUserContext()
 
   const useRepeat = () => {
     console.log(repeatTrack)
@@ -70,9 +68,7 @@ function Bar({ singles }) {
             onTimeUpdate={onTimeUpdate}
             onLoadedMetadata={onLoadedMetadata}
             style={{ display: 'none' }}
-          >
-            {/* <source src={singles.track_file} /> */}
-          </audio>
+          ></audio>
           <S.BarContent>
             <ProgressBar
               onProgress="timeProgress"
@@ -80,7 +76,6 @@ function Bar({ singles }) {
               timeProgress={timeProgress}
               audioRef={audioRef}
             />
-            {/* <S.BarPlayerProgress /> */}
             <S.BarPlayerBlock>
               <S.BarPlayer>
                 <S.PlayerControls>

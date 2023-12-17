@@ -2,19 +2,21 @@ import { useState } from 'react'
 import Logo from '../../img/logo.png'
 import * as S from './Navigation.Styles'
 import { Link } from 'react-router-dom'
+import { useUserContext } from '../../context/UserContext'
 
-function Menu({ setSingles, setIsLoadind }) {
+function Menu() {
   const [isOpened, setIsOpened] = useState(false)
+  const { logoutButton } = useUserContext()
 
   function onBurgerClick() {
     setIsOpened(!isOpened)
   }
 
-  const logoutButton = () => {
-    localStorage.clear()
-    setSingles(null)
-    setIsLoadind(null)
-  }
+  // const logoutButton = () => {
+  //   localStorage.clear()
+  //   setSingles(null)
+  //   setIsLoadind(null)
+  // }
 
   return (
     <S.MainNav>
@@ -40,9 +42,9 @@ function Menu({ setSingles, setIsLoadind }) {
               </Link>
             </S.MenuItem>
             <S.MenuItem>
-              <Link to="/login">
-                <S.MenuLink onClick={logoutButton}>Выйти</S.MenuLink>
-              </Link>
+              {/* <Link to="/login"> */}
+              <S.MenuLink onClick={logoutButton}>Выйти</S.MenuLink>
+              {/* </Link> */}
             </S.MenuItem>
           </S.MenuList>
         </S.NavMenu>

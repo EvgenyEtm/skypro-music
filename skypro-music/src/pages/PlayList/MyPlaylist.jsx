@@ -7,36 +7,24 @@ import { SearchBlock } from '../../components/SearchBlock/Search.jsx'
 import { TrackBar } from '../../components/TrackBar/TrackBar.jsx'
 import Track from '../../components/Track/Track.jsx'
 
-export const MyPlaylist = ({
-  singles,
-  arrayTrack,
-  setArrayTrack,
-  isLoadind,
-  setSingles,
-  setIsLoadind,
-}) => {
+export const MyPlaylist = () => {
   return (
     <S.Wrapper>
       <S.Container>
         <S.GlobalStyled />
         <S.Main>
-          <Navigation setSingles={setSingles} setIsLoadind={setIsLoadind} />
+          <Navigation />
           <D.FixateTracksBlock>
             <SearchBlock />
             <D.CenterblockSubHead>Мои треки</D.CenterblockSubHead>
             <TrackBar />
-            <Track
-              arrayTrack={arrayTrack}
-              setArrayTrack={setArrayTrack}
-              isLoadind={isLoadind}
-              setSingles={setSingles}
-            />
+            <Track />
           </D.FixateTracksBlock>
           <D.FixateLogout>
-            <Logout setIsLoadind={setIsLoadind} setSingles={setSingles} />
+            <Logout />
           </D.FixateLogout>
         </S.Main>
-        <Bar singles={singles} />
+        <Bar />
       </S.Container>
     </S.Wrapper>
   )

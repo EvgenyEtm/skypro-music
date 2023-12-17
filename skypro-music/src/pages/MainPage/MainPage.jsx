@@ -6,35 +6,23 @@ import * as S from '../../App.Styles.jsx'
 import Track from '../../components/Track/Track.jsx'
 import { Logout } from '../../components/Logout/Logout.jsx'
 
-export const MainPage = ({
-  setIsLoadind,
-  singles,
-  setSingles,
-  arrayTrack,
-  isLoadind,
-}) => {
-  console.log(singles)
-
+export const MainPage = () => {
   return (
     <S.Wrapper>
       <S.Container>
         <S.GlobalStyled />
         <S.Main>
-          <Navigation setSingles={setSingles} setIsLoadind={setIsLoadind} />
+          <Navigation />
           <S.MainCenterblock>
             <TrackList />
-            <Track
-              setSingles={setSingles}
-              arrayTrack={arrayTrack}
-              isLoadind={isLoadind}
-            />
+            <Track />
           </S.MainCenterblock>
           <S.MainCenterblock>
-            <Logout setSingles={setSingles} setIsLoadind={setIsLoadind} />
+            <Logout />
             <Sidebar />
           </S.MainCenterblock>
         </S.Main>
-        <Bar singles={singles} />
+        <Bar />
       </S.Container>
     </S.Wrapper>
   )
