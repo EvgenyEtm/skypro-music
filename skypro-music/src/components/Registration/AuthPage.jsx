@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import * as S from './AuthPage.Styles'
 import { useEffect, useState } from 'react'
 import LoginImg from '../../img/logo_modal.png'
@@ -14,50 +14,65 @@ export default function AuthPage() {
   const [disabledButton, setDisabledButton] = useState(false)
   const navigate = useNavigate()
   const { isLoginMode, setIsLoginMode } = useUserContext()
+
   const handleLogin = async () => {
-    try {
-      console.log('2')
-      if (!email) {
-        console.error('не введен email')
-        return
-      }
-      if (!password) {
-        console.error('не введен password')
-        return
-      }
-      if (email && password) {
+    if (email && password) {
+      try {
+        setDisabledButton(true)
         const response = await login(email, password)
-        // console.log(response.username)
         localStorage.setItem('token', JSON.stringify(response))
-        const token = JSON.parse(localStorage.getItem('token'))
-        console.log(token.username)
         navigate('/')
+      } catch (error) {
+        console.warn(error.message)
+        setError(error.message)
+      } finally {
+        console.log(error)
+        setDisabledButton(false)
       }
-    } catch (error) {
-      console.warn(error.message)
+    }
+    if (!email) {
+      return setError('Не указан email')
+    }
+    if (!password) {
+      return setError('Не указан password')
     }
     // alert(`Выполняется вход: ${email} ${password}`)
-    // setError('Неизвестная ошибка входа')
   }
 
-  const handleRegister = async () => {
-    try {
-      if (password === repeatPassword) {
-        setDisabledButton(true)
-        console.log('correc password')
-        const response = await signupUser(email, password)
-        console.log(response)
-        localStorage.setItem('token', JSON.stringify(response))
-        setIsLoginMode(true)
-      } else console.log('uncorrec password')
-    } catch (error) {
-      console.warn(error.message)
-    } finally {
-      setDisabledButton(false)
-    }
+  //
 
+  const handleRegister = async () => {
+    if (email && password) {
+      try {
+        if (password === repeatPassword) {
+          setDisabledButton(true)
+          console.log('correc password')
+          const response = await signupUser(email, password)
+          console.log(response)
+          localStorage.setItem('token', JSON.stringify(response))
+          setIsLoginMode(true)
+          navigate('/')
+        }
+      } catch (error) {
+        console.warn(error.message)
+        setError(error.message)
+      } finally {
+        setDisabledButton(false)
+      }
+    }
+    if (!email) {
+      return setError('Не указан email')
+    }
+    if (!password) {
+      return setError('Не указан password')
+    }
+    if (!repeatPassword) {
+      return setError('Повторите password')
+    }
+    if (password !== repeatPassword) {
+      return setError('Пароли не совпадают')
+    }
     // alert(`Выполняется регистрация: ${email} ${password}`)
-    // setError('Неизвестная ошибка регистрации')
   }
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
@@ -99,13 +114,9 @@ export default function AuthPage() {
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <Link to={'/'}>
-                <S.PrimaryButton
-                  onClick={() => handleLogin({ email, password })}
-                >
-                  Войти
-                </S.PrimaryButton>
-              </Link>
+              <S.PrimaryButton onClick={() => handleLogin({ email, password })}>
+                Войти
+              </S.PrimaryButton>
               <S.SecondaryButton onClick={() => setIsLoginMode(false)}>
                 Зарегистрироваться
               </S.SecondaryButton>
