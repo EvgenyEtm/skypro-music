@@ -1,11 +1,55 @@
 import { useEffect, useState } from 'react'
-import SpriteSvg from '../../img/icon/sprite.svg'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import * as S from './BarStyles'
-export const timer = 5000
+import * as S from './Bar.Styles'
+import React from 'react'
+import ProgressBar from './ProgressBar'
+import { VolumeControl } from './VolumeControl'
+import { useUserContext } from '../../context/UserContext'
+export const timer = 1000
 
 function Bar() {
+  const [repeatTrack, setRepeatTrack] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true)
+  const [timeProgress, setTimeProgress] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const audioRef = React.useRef(null)
+  const { singles } = useUserContext()
+
+  const useRepeat = () => {
+    console.log(repeatTrack)
+    if (repeatTrack === true) {
+      return setRepeatTrack(false), (audioRef.current.loop = false)
+    }
+    if (repeatTrack === false) {
+      return setRepeatTrack(true), (audioRef.current.loop = true)
+    }
+  }
+  const handleStart = () => {
+    audioRef.current.play()
+    setIsPlaying(true)
+  }
+
+  const handleStop = () => {
+    audioRef.current.pause()
+    setIsPlaying(false)
+  }
+  const togglePlay = isPlaying ? handleStop : handleStart
+
+  useEffect(() => {
+    if (isPlaying && singles) {
+      audioRef.current.play()
+      setIsPlaying(true)
+    }
+  }, [isPlaying, singles, audioRef])
+
+  const onLoadedMetadata = () => {
+    setDuration(audioRef.current.duration)
+  }
+  const onTimeUpdate = () => {
+    setTimeProgress(audioRef.current.currentTime)
+  }
+
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -14,115 +58,110 @@ function Bar() {
     }, timer)
   }, [])
 
-  console.log(isLoading)
-
   return (
-    <S.Bar>
-      <S.BarContent>
-        <S.BarPlayerProgress />
-        <S.BarPlayerBlock>
-          <S.BarPlayer className="player">
-            <S.PlayerControls>
-              <S.PlayerBtnPrev>
-                <S.PlayerBtnPrevSvg className="_btn-icon" alt="prev">
-                  <use xlinkHref={`${SpriteSvg}#icon-prev`} />
-                </S.PlayerBtnPrevSvg>
-              </S.PlayerBtnPrev>
-              <S.PlayerBtnPlay className="_btn">
-                <S.PlayerBtnPlaySvg className="_btn-icon" alt="play">
-                  <use xlinkHref={`${SpriteSvg}#icon-play`} />
-                </S.PlayerBtnPlaySvg>
-              </S.PlayerBtnPlay>
-              <S.PlayerBtnNext>
-                <S.PlayerBtnNextSvg className="_btn-icon" alt="next">
-                  <use xlinkHref={`${SpriteSvg}#icon-next`} />
-                </S.PlayerBtnNextSvg>
-              </S.PlayerBtnNext>
-              <S.PlayerBtnRepeat>
-                <S.PlayerBtnRepeatSvg className="_btn-icon" alt="repeat">
-                  <use xlinkHref={`${SpriteSvg}#icon-repeat`} />
-                </S.PlayerBtnRepeatSvg>
-              </S.PlayerBtnRepeat>
-              <S.PlayerBtnShuffle>
-                <S.PlayerBtnShuffleSvg className="_btn-icon" alt="shuffle">
-                  <use xlinkHref={`${SpriteSvg}#icon-shuffle`} />
-                </S.PlayerBtnShuffleSvg>
-              </S.PlayerBtnShuffle>
-            </S.PlayerControls>
+    <>
+      {singles ? (
+        <S.Bar>
+          <audio
+            src={singles.track_file}
+            ref={audioRef}
+            onTimeUpdate={onTimeUpdate}
+            onLoadedMetadata={onLoadedMetadata}
+            style={{ display: 'none' }}
+          ></audio>
+          <S.BarContent>
+            <ProgressBar
+              onProgress="timeProgress"
+              duration={duration}
+              timeProgress={timeProgress}
+              audioRef={audioRef}
+            />
+            <S.BarPlayerBlock>
+              <S.BarPlayer>
+                <S.PlayerControls>
+                  <S.PlayerBtnPrev>
+                    <S.PlayerBtnPrevSvg alt="prev" />
+                  </S.PlayerBtnPrev>
+                  <S.PlayerBtnPlay>
+                    {isPlaying ? (
+                      <S.PlayerBtnPauseSvg onClick={togglePlay} alt="pause" />
+                    ) : (
+                      <S.PlayerBtnPlaySvg onClick={togglePlay} alt="play" />
+                    )}
+                  </S.PlayerBtnPlay>
+                  <S.PlayerBtnNext>
+                    <S.PlayerBtnNextSvg alt="next" />
+                  </S.PlayerBtnNext>
+                  <S.PlayerBtnRepeat onClick={useRepeat}>
+                    {repeatTrack ? (
+                      <S.PlayerBntRepeatSvgActive alt="repeat" />
+                    ) : (
+                      <S.PlayerBtnRepeatSvg alt="repeat" />
+                    )}
+                  </S.PlayerBtnRepeat>
+                  <S.PlayerBtnShuffle>
+                    <S.PlayerBtnShuffleSvg alt="shuffle" />
+                  </S.PlayerBtnShuffle>
+                </S.PlayerControls>
 
-            <S.PlayerTrackPlay>
-              <S.TrackPlayContain>
-                <S.TrackPlayImage>
-                  {isLoading ? (
-                    <Skeleton
-                      width={55}
-                      height={55}
-                      baseColor="#202020"
-                      highlightColor="#444"
-                    />
-                  ) : (
-                    <S.TrackPlaySvg alt="music">
-                      <use xlinkHref={`${SpriteSvg}#icon-note`} />
-                    </S.TrackPlaySvg>
-                  )}
-                </S.TrackPlayImage>
-                <S.TrackPlayAuthor>
-                  {isLoading ? (
-                    <Skeleton
-                      width={90}
-                      baseColor="#202020"
-                      highlightColor="#444"
-                    />
-                  ) : (
-                    <S.TrackPlayAuthorLink href="http://">
-                      Ты та...
-                    </S.TrackPlayAuthorLink>
-                  )}
-                </S.TrackPlayAuthor>
-                <S.TrackPlayAlbum>
-                  {isLoading ? (
-                    <Skeleton
-                      width={90}
-                      baseColor="#202020"
-                      highlightColor="#444"
-                    />
-                  ) : (
-                    <S.TrackPlayAlbumLink href="http://">
-                      Баста
-                    </S.TrackPlayAlbumLink>
-                  )}
-                </S.TrackPlayAlbum>
-              </S.TrackPlayContain>
+                <S.PlayerTrackPlay>
+                  <S.TrackPlayContain>
+                    <S.TrackPlayImage>
+                      {isLoading ? (
+                        <Skeleton
+                          width={55}
+                          height={55}
+                          baseColor="#202020"
+                          highlightColor="#444"
+                        />
+                      ) : (
+                        <S.TrackPlaySvg alt="music" />
+                      )}
+                    </S.TrackPlayImage>
+                    <S.TrackPlayAuthor>
+                      {isLoading ? (
+                        <Skeleton
+                          width={90}
+                          baseColor="#202020"
+                          highlightColor="#444"
+                        />
+                      ) : (
+                        <S.TrackPlayAuthorLink href="http://">
+                          {singles.name}
+                        </S.TrackPlayAuthorLink>
+                      )}
+                    </S.TrackPlayAuthor>
+                    <S.TrackPlayAlbum>
+                      {isLoading ? (
+                        <Skeleton
+                          width={90}
+                          baseColor="#202020"
+                          highlightColor="#444"
+                        />
+                      ) : (
+                        <S.TrackPlayAlbumLink href="http://">
+                          {singles.author}
+                        </S.TrackPlayAlbumLink>
+                      )}
+                    </S.TrackPlayAlbum>
+                  </S.TrackPlayContain>
 
-              <S.TrackPlayLikeDis>
-                <S.TrackPlayLike className="_btn-icon">
-                  <S.TrackPlayLikeSvg alt="like">
-                    <use xlinkHref={`${SpriteSvg}#icon-like`} />
-                  </S.TrackPlayLikeSvg>
-                </S.TrackPlayLike>
-                <S.TrackPlayDislike className="_btn-icon">
-                  <S.TrackPlayDislikeSvg alt="dislike">
-                    <use xlinkHref={`${SpriteSvg}#icon-dislike`} />
-                  </S.TrackPlayDislikeSvg>
-                </S.TrackPlayDislike>
-              </S.TrackPlayLikeDis>
-            </S.PlayerTrackPlay>
-          </S.BarPlayer>
-          <S.BarVolumeBlock>
-            <S.VolumeContent>
-              <S.VolumeImage>
-                <S.VolumeSvg alt="volume">
-                  <use xlinkHref={`${SpriteSvg}#icon-volume`} />
-                </S.VolumeSvg>
-              </S.VolumeImage>
-              <S.VolumeProgress>
-                <S.VolumeProgressLine type="range" name="range" />
-              </S.VolumeProgress>
-            </S.VolumeContent>
-          </S.BarVolumeBlock>
-        </S.BarPlayerBlock>
-      </S.BarContent>
-    </S.Bar>
+                  <S.TrackPlayLikeDis>
+                    <S.TrackPlayLike className="_btn-icon">
+                      <S.TrackPlayLikeSvg alt="like" />
+                    </S.TrackPlayLike>
+                    <S.TrackPlayDislike className="_btn-icon">
+                      <S.TrackPlayDislikeSvg alt="dislike" />
+                    </S.TrackPlayDislike>
+                  </S.TrackPlayLikeDis>
+                </S.PlayerTrackPlay>
+              </S.BarPlayer>
+              <VolumeControl audioRef={audioRef} />
+            </S.BarPlayerBlock>
+          </S.BarContent>
+        </S.Bar>
+      ) : null}
+    </>
   )
 }
 
