@@ -22,6 +22,7 @@ export const MainPage = () => {
             <Sidebar />
           </S.MainCenterblock>
         </S.Main>
+        {/* <Bar /> */}
         <Bar />
       </S.Container>
     </S.Wrapper>

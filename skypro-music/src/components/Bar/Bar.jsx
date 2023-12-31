@@ -5,17 +5,39 @@ import * as S from './Bar.Styles'
 import React from 'react'
 import ProgressBar from './ProgressBar'
 import { VolumeControl } from './VolumeControl'
-import { useUserContext } from '../../context/UserContext'
+// import { useUserContext } from '../../context/UserContext'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  setIsPlaying,
+  setNextTrack,
+  setPrevTrack,
+  setShuffledTracks,
+  // repeatPlayer,
+} from '../../store/Slice/SliceTracks'
+import {
+  shuffleAllTracksSelector,
+  allTracksSelector,
+  setSelectedSong,
+} from '../../store/Selectors/Selectors'
+
 export const timer = 1000
 
 function Bar() {
   const [repeatTrack, setRepeatTrack] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(true)
+  // const [isPlaying, setIsPlaying] = useState(false)
   const [timeProgress, setTimeProgress] = useState(0)
   const [duration, setDuration] = useState(0)
   const audioRef = React.useRef(null)
-  const { singles } = useUserContext()
+  const dispatch = useDispatch()
+  const suffle = useSelector((store) => store.track.shuffle)
+  // const { selectedSong } = useUserContext()
+  const selectedSong = useSelector(setSelectedSong)
+  const shuffleAllTracks = useSelector(shuffleAllTracksSelector)
+  const allTracks = useSelector(allTracksSelector)
 
+  const allTracksPlayer = suffle ? shuffleAllTracks : allTracks
+  const indexOfSong = useSelector((store) => store.track.indexOfSong)
+  const isPlaying = useSelector((store) => store.track.isPlaying)
   const useRepeat = () => {
     console.log(repeatTrack)
     if (repeatTrack === true) {
@@ -25,23 +47,47 @@ function Bar() {
       return setRepeatTrack(true), (audioRef.current.loop = true)
     }
   }
-  const handleStart = () => {
-    audioRef.current.play()
-    setIsPlaying(true)
-  }
 
-  const handleStop = () => {
-    audioRef.current.pause()
-    setIsPlaying(false)
-  }
-  const togglePlay = isPlaying ? handleStop : handleStart
-
-  useEffect(() => {
-    if (isPlaying && singles) {
-      audioRef.current.play()
-      setIsPlaying(true)
+  const togglePlay = () => {
+    {
+      isPlaying
+        ? `${(audioRef.current.pause(), dispatch(setIsPlaying(false)))}`
+        : `${(audioRef.current.play(), dispatch(setIsPlaying(true)))}`
     }
-  }, [isPlaying, singles, audioRef])
+  }
+
+  const nextTrack = () => {
+    if (indexOfSong < allTracksPlayer.length - 1) {
+      dispatch(
+        setNextTrack({
+          nextTrack: allTracksPlayer[allTracksPlayer.indexOf(selectedSong) + 1],
+          indexNextTrack: allTracksPlayer.indexOf(selectedSong) + 1,
+        }),
+      )
+      console.log('nextTrack')
+    }
+    if (indexOfSong === allTracksPlayer.length - 1) {
+      dispatch(
+        setNextTrack({
+          nextTrack: allTracksPlayer[0],
+          indexNextTrack: 0,
+        }),
+      )
+      console.log('re')
+    }
+  }
+
+  const prevTrack = () => {
+    if (indexOfSong < allTracksPlayer.length - 1) {
+      dispatch(
+        setPrevTrack({
+          prevTrack: allTracksPlayer[allTracksPlayer.indexOf(selectedSong) - 1],
+          indexPrevTrack: allTracksPlayer.indexOf(selectedSong) - 1,
+        }),
+      )
+      console.log('prevTrack')
+    }
+  }
 
   const onLoadedMetadata = () => {
     setDuration(audioRef.current.duration)
@@ -58,12 +104,32 @@ function Bar() {
     }, timer)
   }, [])
 
+  useEffect(() => {
+    if (selectedSong) {
+      audioRef.current.play()
+      dispatch(setIsPlaying(true))
+      audioRef.current.onended = () => {
+        if (indexOfSong < allTracksPlayer.length - 1) {
+          dispatch(
+            setNextTrack({
+              nextTrack:
+                allTracksPlayer[allTracksPlayer.indexOf(selectedSong) + 1],
+              indexNextTrack: allTracksPlayer.indexOf(selectedSong) + 1,
+            }),
+            console.log('2'),
+          )
+          dispatch(setIsPlaying(false))
+        }
+      }
+    }
+  }, [selectedSong])
+
   return (
     <>
-      {singles ? (
+      {selectedSong ? (
         <S.Bar>
           <audio
-            src={singles.track_file}
+            src={selectedSong.track_file}
             ref={audioRef}
             onTimeUpdate={onTimeUpdate}
             onLoadedMetadata={onLoadedMetadata}
@@ -80,7 +146,7 @@ function Bar() {
               <S.BarPlayer>
                 <S.PlayerControls>
                   <S.PlayerBtnPrev>
-                    <S.PlayerBtnPrevSvg alt="prev" />
+                    <S.PlayerBtnPrevSvg onClick={prevTrack} alt="prev" />
                   </S.PlayerBtnPrev>
                   <S.PlayerBtnPlay>
                     {isPlaying ? (
@@ -90,7 +156,7 @@ function Bar() {
                     )}
                   </S.PlayerBtnPlay>
                   <S.PlayerBtnNext>
-                    <S.PlayerBtnNextSvg alt="next" />
+                    <S.PlayerBtnNextSvg onClick={nextTrack} alt="next" />
                   </S.PlayerBtnNext>
                   <S.PlayerBtnRepeat onClick={useRepeat}>
                     {repeatTrack ? (
@@ -99,8 +165,16 @@ function Bar() {
                       <S.PlayerBtnRepeatSvg alt="repeat" />
                     )}
                   </S.PlayerBtnRepeat>
-                  <S.PlayerBtnShuffle>
-                    <S.PlayerBtnShuffleSvg alt="shuffle" />
+                  <S.PlayerBtnShuffle
+                    onClick={() => {
+                      dispatch(setShuffledTracks())
+                    }}
+                  >
+                    {suffle ? (
+                      <S.PlayerBtnShuffleSvgActive alt="shuffle" />
+                    ) : (
+                      <S.PlayerBtnShuffleSvg alt="shuffle" />
+                    )}
                   </S.PlayerBtnShuffle>
                 </S.PlayerControls>
 
@@ -127,7 +201,7 @@ function Bar() {
                         />
                       ) : (
                         <S.TrackPlayAuthorLink href="http://">
-                          {singles.name}
+                          {selectedSong.name}
                         </S.TrackPlayAuthorLink>
                       )}
                     </S.TrackPlayAuthor>
@@ -140,7 +214,7 @@ function Bar() {
                         />
                       ) : (
                         <S.TrackPlayAlbumLink href="http://">
-                          {singles.author}
+                          {selectedSong.author}
                         </S.TrackPlayAlbumLink>
                       )}
                     </S.TrackPlayAlbum>

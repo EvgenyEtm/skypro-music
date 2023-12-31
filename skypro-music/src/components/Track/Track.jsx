@@ -4,16 +4,31 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import * as S from './Track.Styles'
 import { timer } from '../Bar/Bar'
 import { useUserContext } from '../../context/UserContext'
+import { setSingles } from '../../store/Slice/SliceTracks'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSelectedSong, setIsPlaying } from '../../store/Selectors/Selectors'
 
 export const Track = () => {
+  const selectedSong = useSelector(setSelectedSong)
+  const isPlaying = useSelector(setIsPlaying)
   const [isLoading, setIsLoading] = useState(true)
-  const { isLoadind, setSingles, arrayTrack } = useUserContext()
+  const { isLoadind, arrayTrack } = useUserContext()
+  const dispatch = useDispatch()
+  if (selectedSong) {
+    console.log(selectedSong.id)
+  }
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)
     }, timer)
   }, [])
+
+  const setSong = (track) => {
+    const indexOfSong = arrayTrack.indexOf(track)
+
+    dispatch(setSingles({ track, indexOfSong }))
+  }
 
   return (
     <S.ContentPlaylist>
@@ -23,17 +38,12 @@ export const Track = () => {
         <>
           {' '}
           {arrayTrack.map((track) => (
-            <S.PlaylistItem key={track.id} onClick={() => setSingles(track)}>
+            <S.PlaylistItem key={track.id} onClick={() => setSong(track)}>
               <S.PlaylistTrack>
                 <S.TrackTitle>
                   <S.TrackTitleImage>
-                    {isLoading ? (
-                      <Skeleton
-                        width={55}
-                        height={55}
-                        baseColor="#202020"
-                        highlightColor="#444"
-                      />
+                    {selectedSong && selectedSong.id === track.id ? (
+                      <S.PointPlaying $playing={isPlaying} />
                     ) : (
                       <S.TrackTitleSvg alt="music" />
                     )}

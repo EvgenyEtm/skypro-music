@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router'
 import { useContext } from 'react'
 import { useState } from 'react'
 import { getTracks } from '../Api'
+import { getAllTracks } from '../store/Slice/SliceTracks'
+import { useDispatch, useSelector } from 'react-redux'
+import { allTracksSelector } from '../store/Selectors/Selectors'
 
 export const UserContext = createContext(null)
 
@@ -11,17 +14,19 @@ export const useUserContext = () => {
 }
 
 export const LocalContext = ({ children }) => {
-  const [singles, setSingles] = useState('')
+  const dispatch = useDispatch()
+  // const [selectedSong, setSelectedSong] = useState('')
+  //const [isPlaying, setIsPlaying] = useState(null)
   const [isLoadind, setIsLoadind] = useState(null)
-  const [arrayTrack, setArrayTrack] = useState([])
-  const [isLoginMode, setIsLoginMode] = useState(true)
 
+  const [isLoginMode, setIsLoginMode] = useState(true)
   useEffect(() => {
-    async function getAllTracks() {
+    async function getApiTracks() {
       try {
         const setResponse = await getTracks()
         setIsLoadind(null)
-        setArrayTrack(setResponse)
+        dispatch(getAllTracks(setResponse))
+        // setArrayTrack(setResponse)
       } catch (error) {
         console.warn(error.message)
         setIsLoadind(
@@ -29,13 +34,18 @@ export const LocalContext = ({ children }) => {
         )
       }
     }
-    getAllTracks()
-  }, [])
+    getApiTracks()
+  }, [dispatch])
+  //const shuffleAllTracks = useSelector(shuffleAllTracksSelector)
+  const allTracks = useSelector(allTracksSelector)
+  // console.log(allTracks)
+  //const shuffle = useSelector(shuffleSelector)
 
+  const arrayTrack = allTracks
   const navigate = useNavigate()
   const logoutButton = () => {
     localStorage.clear()
-    setSingles(false)
+    // setSelectedSong(false)
     setIsLoadind(null)
     navigate('/auth')
   }
@@ -44,12 +54,9 @@ export const LocalContext = ({ children }) => {
     <UserContext.Provider
       value={{
         logoutButton,
-        singles,
-        setSingles,
         isLoadind,
         setIsLoadind,
         arrayTrack,
-        setArrayTrack,
         isLoginMode,
         setIsLoginMode,
       }}

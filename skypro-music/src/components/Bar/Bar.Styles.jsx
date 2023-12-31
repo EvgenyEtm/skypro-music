@@ -203,7 +203,10 @@ export const PlayerBtnShuffleSvg = styled(ShuffleSvg)`
   &:hover path {
     fill: #acacac;
   }
-  &:active {
+`
+export const PlayerBtnShuffleSvgActive = styled(ShuffleSvg)`
+  cursor: pointer;
+  path {
     fill: white;
   }
 `

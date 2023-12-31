@@ -5,7 +5,7 @@ import { PlaylistOfTheDay } from './PlayListOfTheDay'
 import Track from '../../components/Track/Track'
 import * as S from '../../App.Styles'
 import TrackList from '../../components/TrackList/TrackList'
-import { Bar } from '../../components/Bar/Bar.Styles'
+// import { Bar } from '../../components/Bar/Bar.Styles'
 
 export function FavoriteCategory() {
   const { id } = useParams()
@@ -21,7 +21,7 @@ export function FavoriteCategory() {
                 <TrackList />
                 <Track />
               </S.MainCenterblock>
-              <Bar />
+              {/* <Bar /> */}
               <HundredHits />
             </S.Container>
           </S.Wrapper>
