@@ -1,25 +1,19 @@
-import "./App.css";
-import Bar from "./components/Bar/Bar";
-import Navigation from "./components/Navigation/Navigation.jsx";
-import Sidebar from "./components/Sidbar/Sidebar.jsx";
-import TrackList from "./components/TrackList/TrackList.jsx";
+import * as S from './App.Styles.jsx'
+import { AppRoutes } from './routes.jsx'
 
+import { LocalContext } from './context/UserContext.jsx'
 
 function App() {
+  //смена формы после успешной регистрации.
+
   return (
-    <div className="wrapper">
-  <div className="container">
-    <main className="main">
-        <Navigation/>
-        <TrackList/>
-        <Sidebar/>
-    </main>
-    <Bar/>
-    <footer className="footer"></footer>
-    </div>
-    </div>
-    
-);
+    <S.Container>
+      <S.GlobalStyled />
+      <LocalContext>
+        <AppRoutes />
+      </LocalContext>
+    </S.Container>
+  )
 }
 
-export default App;
+export default App

@@ -36,9 +36,14 @@ export const ModalFormLogin = styled.form`
   align-items: center;
   padding: 43px 47px 47px 40px;
 
-  &input:first-child {
-    margin-bottom: 30px;
+  &:input:first-child {
+    path {
+      margin-bottom: 30px;
+    }
   }
+`
+export const Separator = styled.div`
+  margin-bottom: 60px;
 `
 export const ModalLogo = styled.div`
   width: 140px;
@@ -115,7 +120,7 @@ export const ModalBtnEnter = styled.button`
   letter-spacing: -0.054px;
   background-color: #580ea2;
   border-radius: 6px;
-  margin-top: 60px;
+  ${'' /* margin-top: 60px; */}
   margin-bottom: 20px;
   border: none;
   display: -webkit-box;
