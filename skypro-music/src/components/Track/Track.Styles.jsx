@@ -80,7 +80,8 @@ export const TrackTitleSvg = styled(NoteSvg)`
 `
 export const TrackTitleText = styled.div``
 
-export const TrackTitleLink = styled.a`
+export const TrackTitleLink = styled.div`
+  cursor: pointer;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -122,7 +123,7 @@ export const TrackAlbumLink = styled.a`
   color: #696969;
 `
 export const TrackTime = styled.div``
-export const TrackTimeSvg = styled(LikeSvg)`
+export const TrackLikeSvg = styled(LikeSvg)`
   cursor: pointer;
   margin-right: 17px;
   path {
@@ -131,8 +132,17 @@ export const TrackTimeSvg = styled(LikeSvg)`
   &:hover path {
     stroke: #acacac;
   }
-
   &:active path {
+    stroke-width: 1px;
+    stroke: #b672ff;
+    fill: #b672ff;
+  }
+`
+
+export const TrackLikeSvgActive = styled(LikeSvg)`
+  margin-right: 17px;
+  cursor: pointer;
+  path {
     stroke-width: 1px;
     stroke: #b672ff;
     fill: #b672ff;
@@ -162,7 +172,7 @@ const animationPointPulse = () => css`
 `
 
 export const PointPlaying = styled.div`
-  position: relative; // Нужно будет в будущем, для позиционирования эффекта
+  position: relative;
   text-align: center;
   padding: 8px;
   width: 16px;

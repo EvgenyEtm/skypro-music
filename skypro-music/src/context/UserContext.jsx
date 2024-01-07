@@ -18,7 +18,7 @@ export const LocalContext = ({ children }) => {
   // const [selectedSong, setSelectedSong] = useState('')
   //const [isPlaying, setIsPlaying] = useState(null)
   const [isLoadind, setIsLoadind] = useState(null)
-
+  // const isLiked = useSelector(setIsLiked)
   const [isLoginMode, setIsLoginMode] = useState(true)
   useEffect(() => {
     async function getApiTracks() {
@@ -37,11 +37,11 @@ export const LocalContext = ({ children }) => {
     getApiTracks()
   }, [dispatch])
   //const shuffleAllTracks = useSelector(shuffleAllTracksSelector)
-  const allTracks = useSelector(allTracksSelector)
+  //const allTracks = useSelector(allTracksSelector)
   // console.log(allTracks)
   //const shuffle = useSelector(shuffleSelector)
+  const arrayTrack = useSelector(allTracksSelector)
 
-  const arrayTrack = allTracks
   const navigate = useNavigate()
   const logoutButton = () => {
     localStorage.clear()

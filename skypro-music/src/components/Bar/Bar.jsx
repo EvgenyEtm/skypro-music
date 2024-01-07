@@ -122,7 +122,7 @@ function Bar() {
         }
       }
     }
-  }, [selectedSong])
+  }, [selectedSong, allTracksPlayer, indexOfSong, dispatch])
 
   return (
     <>

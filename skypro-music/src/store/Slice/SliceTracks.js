@@ -7,7 +7,18 @@ const initialState = {
   shuffle: false,
   isPlaying: null,
   shuffleAllTracks: [],
+  isliked: false,
+  isLikedIds: [],
 }
+
+// const likedArr = (actions) => {
+//   const newArr = [...actions]
+//   return newArr
+// }
+
+// const makeUniq = (arr) => {
+//   return arr.filter((el, id) => arr.indexOf(el) === id)
+// }
 
 export const tracksSlice = createSlice({
   name: 'tracksReducer',
@@ -15,6 +26,39 @@ export const tracksSlice = createSlice({
   reducers: {
     getAllTracks: (state, action) => {
       state.allTracks = action.payload
+      //console.log(state.allTracks.map((track) => track))
+    },
+
+    removeTrack(state, action) {
+      state.isLikedIds = state.isLikedIds.filter(
+        (isLiked) => isLiked.id !== action.payload.id,
+      )
+    },
+    setFavoriteTracks: (state, action) => {
+      // console.log(state.isLikedIds.length)
+      //console.log(state.isLikedIds.map((track) => track))
+      //const likedTrack = action.payload
+      console.log(action.payload.track.id)
+      if (state.isLikedIds.length > 0) {
+        const toggledLike = state.isLikedIds.find(
+          (track) => track.id === action.payload.track.id,
+        )
+        if (toggledLike === undefined) {
+          state.isLikedIds = [...state.isLikedIds, action.payload.track]
+          console.log(state.isLikedIds)
+          return
+        }
+        console.log(`${state.isLikedIds}--`)
+        return
+      }
+      state.isLikedIds = [...state.isLikedIds, action.payload.track]
+
+      // toggledLike.isliked = !toggledLike.isliked
+      // console.log(toggledLike.isliked)
+
+      // console.log(state.isLikedIds)
+      // state.isLikedIds = makeUniq(state.isLikedIds)
+      console.log(state.isLikedIds)
     },
 
     setIsPlaying: (state, action) => {
@@ -43,7 +87,6 @@ export const tracksSlice = createSlice({
       state.shuffle = !state.shuffle
       if (state.shuffle) {
         state.shuffleAllTracks = shuffledArr(state.allTracks)
-        console.log(state.shuffleAllTracks)
       }
     },
   },
@@ -55,6 +98,8 @@ const shuffledArr = (actions) => {
 }
 
 export const {
+  removeTrack,
+  setFavoriteTracks,
   getAllTracks,
   setIsPlaying,
   setSingles,
@@ -64,3 +109,23 @@ export const {
 } = tracksSlice.actions
 
 export default tracksSlice.reducer
+
+//state.allTracks.map((track) => track))
+
+// console.log(action.payload.track.id)
+// state.isliked = !state.isliked
+// console.log(
+//   state.allTracks.find((track) => track === action.payload.track),
+// )
+// // console.log(action.payload.id)
+// console.log(
+//   state.allTracks.find((track) => track.payload === action.payload),
+// )
+
+// //state.selectedSong.isliked = true
+// console.log(state.selectedSong)
+// console.log(action.payload.id)
+// toggledLike.isliked = !toggledLike.isliked
+// let asd = state.isLikedIds
+// toggledLike.payload = { ...asd }
+// state.isLikedIds = [...toggledLike.id]

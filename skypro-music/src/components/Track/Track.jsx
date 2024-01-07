@@ -4,19 +4,23 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import * as S from './Track.Styles'
 import { timer } from '../Bar/Bar'
 import { useUserContext } from '../../context/UserContext'
-import { setSingles } from '../../store/Slice/SliceTracks'
+import { setSingles, setFavoriteTracks } from '../../store/Slice/SliceTracks'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSelectedSong, setIsPlaying } from '../../store/Selectors/Selectors'
+import {
+  setSelectedSong,
+  setIsPlaying,
+  // setIsLiked,
+  allTracksSelector,
+} from '../../store/Selectors/Selectors'
 
 export const Track = () => {
   const selectedSong = useSelector(setSelectedSong)
+  // const isLiked = useSelector(setIsLiked)
   const isPlaying = useSelector(setIsPlaying)
   const [isLoading, setIsLoading] = useState(true)
-  const { isLoadind, arrayTrack } = useUserContext()
+  const { isLoadind } = useUserContext()
   const dispatch = useDispatch()
-  if (selectedSong) {
-    console.log(selectedSong.id)
-  }
+  const allTracks = useSelector(allTracksSelector)
 
   useEffect(() => {
     setTimeout(() => {
@@ -25,7 +29,7 @@ export const Track = () => {
   }, [])
 
   const setSong = (track) => {
-    const indexOfSong = arrayTrack.indexOf(track)
+    const indexOfSong = allTracks.indexOf(track)
 
     dispatch(setSingles({ track, indexOfSong }))
   }
@@ -37,8 +41,8 @@ export const Track = () => {
       ) : (
         <>
           {' '}
-          {arrayTrack.map((track) => (
-            <S.PlaylistItem key={track.id} onClick={() => setSong(track)}>
+          {allTracks.map((track) => (
+            <S.PlaylistItem key={track.id}>
               <S.PlaylistTrack>
                 <S.TrackTitle>
                   <S.TrackTitleImage>
@@ -56,7 +60,7 @@ export const Track = () => {
                         highlightColor="#444"
                       />
                     ) : (
-                      <S.TrackTitleLink>
+                      <S.TrackTitleLink onClick={() => setSong(track)}>
                         {track.name}
                         <S.TrackTitleSpan></S.TrackTitleSpan>
                       </S.TrackTitleLink>
@@ -71,7 +75,9 @@ export const Track = () => {
                       highlightColor="#444"
                     />
                   ) : (
-                    <S.TrackAuthorLink>{track.author}</S.TrackAuthorLink>
+                    <S.TrackAuthorLink onClick={() => setSong(track)}>
+                      {track.author}
+                    </S.TrackAuthorLink>
                   )}
                 </S.TrackAuthor>
                 <S.TrackAlbum>
@@ -85,6 +91,10 @@ export const Track = () => {
                     <S.TrackAlbumLink>{track.album}</S.TrackAlbumLink>
                   )}
                 </S.TrackAlbum>
+                {/* <FavoriteTrack
+                  
+                  setFavoriteTracks={setFavoriteTracks}
+                /> */}
                 <S.TrackTime>
                   {isLoading ? (
                     <Skeleton
@@ -94,7 +104,11 @@ export const Track = () => {
                     />
                   ) : (
                     <>
-                      <S.TrackTimeSvg alt="time" />
+                      <S.TrackLikeSvg
+                        alt="like"
+                        onClick={() => dispatch(setFavoriteTracks({ track }))}
+                      />
+
                       <S.TrackTimeText>
                         {Math.floor(track.duration_in_seconds / 60) < 10
                           ? `0${Math.floor(track.duration_in_seconds / 60)}`
