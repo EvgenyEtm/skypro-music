@@ -29,6 +29,8 @@ export const Track = ({ data }) => {
 
   const [setLike] = useSetLikeMutation()
 
+  const token = localStorage.getItem('token')
+
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)
@@ -89,7 +91,9 @@ export const Track = ({ data }) => {
                       highlightColor="#444"
                     />
                   ) : (
-                    <S.TrackAuthorLink onClick={() => setSong(track)}>
+                    <S.TrackAuthorLink
+                      onClick={() => setSong(track, token.access)}
+                    >
                       {track.author}
                     </S.TrackAuthorLink>
                   )}

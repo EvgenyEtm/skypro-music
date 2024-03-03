@@ -22,7 +22,7 @@ export const playlistApi = createApi({
     }),
 
     setLike: builder.mutation({
-      query: (track) => ({
+      query: (track, token) => ({
         url: `/catalog/track/${track.id}/favorite/`,
         method: 'POST',
         headers: {
