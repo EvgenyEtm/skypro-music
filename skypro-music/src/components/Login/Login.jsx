@@ -1,8 +1,9 @@
+/* eslint-disable no-debugger */
 import * as S from './Login.Styles'
 import { Link } from 'react-router-dom'
 import LoginImg from '../../img/logo_modal.png'
 import { useState } from 'react'
-import { login } from '../../Api'
+import { getToken, login } from '../../Api'
 
 export const Login = ({ setUsername }) => {
   const [email, setEmail] = useState('')
@@ -18,8 +19,12 @@ export const Login = ({ setUsername }) => {
     try {
       console.log('2')
       if (email && password) {
+        debugger
         const response = await login(email, password)
-        console.log(response.username)
+
+        const token = await getToken(email, password)
+        // console.log(response.username)
+        console.log(token)
         setUsername(response.username)
       }
       if (!email) {

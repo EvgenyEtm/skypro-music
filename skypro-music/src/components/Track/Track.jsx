@@ -6,7 +6,7 @@ import { timer } from '../Bar/Bar'
 import { useUserContext } from '../../context/UserContext'
 import {
   setSingles,
-  setFavoriteTracks,
+  //setFavoriteTracks,
   getAllTracks,
 } from '../../store/Slice/SliceTracks'
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,7 +27,7 @@ export const Track = ({ data }) => {
   const dispatch = useDispatch()
   const allTracks = useSelector(allTracksSelector)
 
-  const {} = useSetLikeMutation()
+  const [setLike] = useSetLikeMutation()
 
   useEffect(() => {
     setTimeout(() => {
@@ -120,7 +120,7 @@ export const Track = ({ data }) => {
                     <>
                       <S.TrackLikeSvg
                         alt="like"
-                        onClick={() => dispatch(setFavoriteTracks({ track }))}
+                        onClick={() => setLike(track)}
                       />
 
                       <S.TrackTimeText>

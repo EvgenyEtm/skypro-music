@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import * as S from './AuthPage.Styles'
 import { useEffect, useState } from 'react'
 import LoginImg from '../../img/logo_modal.png'
-import { login, signupUser } from '../../Api'
+import { getToken, login, signupUser } from '../../Api'
 import { useUserContext } from '../../context/UserContext'
 
 export default function AuthPage() {
@@ -19,8 +19,9 @@ export default function AuthPage() {
     if (email && password) {
       try {
         setDisabledButton(true)
-        const response = await login(email, password)
-        localStorage.setItem('token', JSON.stringify(response))
+        await login(email, password)
+        const token = await getToken(email, password)
+        localStorage.setItem('token', JSON.stringify(token))
         navigate('/')
       } catch (error) {
         console.warn(error.message)

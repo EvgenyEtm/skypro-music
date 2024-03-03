@@ -25,6 +25,9 @@ export const playlistApi = createApi({
       query: (track) => ({
         url: `/catalog/track/${track.id}/favorite/`,
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }),
       invalidatesTags: [
         { type: 'Favorites', id: 'LIST' },

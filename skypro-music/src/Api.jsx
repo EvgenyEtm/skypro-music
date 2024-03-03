@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 const apiUrl = 'https://skypro-music-api.skyeng.tech/'
 
 export async function getTracks() {
@@ -31,6 +32,20 @@ export async function login(email, password) {
   }
   const userData = await response.json()
   return userData
+}
+
+export async function getToken(email, password) {
+  return await fetch('https://skypro-music-api.skyeng.tech/user/token/', {
+    method: 'POST',
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+    headers: {
+      // API требует обязательного указания заголовка content-type, так апи понимает что мы посылаем ему json строчку в теле запроса
+      'content-type': 'application/json',
+    },
+  }).then((response) => response.json())
 }
 
 // ЗАРЕГИСТРИРОВАТЬСЯ
