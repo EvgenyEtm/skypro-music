@@ -6,7 +6,7 @@ import * as S from './TrackListStyles'
 import { SearchBlock } from '../SearchBlock/Search.jsx'
 import { TrackBar } from '../TrackBar/TrackBar.jsx'
 
-export function TrackList() {
+export function TrackList(/*{ data, error, isLoading }*/) {
   const [activeFilter, setActiveFilter] = useState(null)
 
   function changeActiveFilter(newFilter) {

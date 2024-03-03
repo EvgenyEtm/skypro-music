@@ -5,8 +5,11 @@ import TrackList from '../../components/TrackList/TrackList.jsx'
 import * as S from '../../App.Styles.jsx'
 import Track from '../../components/Track/Track.jsx'
 import { Logout } from '../../components/Logout/Logout.jsx'
+import { useGetMainPlaylistQuery } from '../../api/playlist.js'
 
 export const MainPage = () => {
+  const { data, error, isLoading } = useGetMainPlaylistQuery()
+
   return (
     <S.Wrapper>
       <S.Container>
@@ -14,8 +17,8 @@ export const MainPage = () => {
         <S.Main>
           <Navigation />
           <S.MainCenterblock>
-            <TrackList />
-            <Track />
+            <TrackList error={error} isLoading={isLoading} />
+            <Track data={data} />
           </S.MainCenterblock>
           <S.MainCenterblock>
             <Logout />

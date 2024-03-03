@@ -4,7 +4,11 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import * as S from './Track.Styles'
 import { timer } from '../Bar/Bar'
 import { useUserContext } from '../../context/UserContext'
-import { setSingles, setFavoriteTracks } from '../../store/Slice/SliceTracks'
+import {
+  setSingles,
+  setFavoriteTracks,
+  getAllTracks,
+} from '../../store/Slice/SliceTracks'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setSelectedSong,
@@ -12,8 +16,9 @@ import {
   // setIsLiked,
   allTracksSelector,
 } from '../../store/Selectors/Selectors'
+import { useSetLikeMutation } from '../../api/playlist'
 
-export const Track = () => {
+export const Track = ({ data }) => {
   const selectedSong = useSelector(setSelectedSong)
   // const isLiked = useSelector(setIsLiked)
   const isPlaying = useSelector(setIsPlaying)
@@ -22,11 +27,20 @@ export const Track = () => {
   const dispatch = useDispatch()
   const allTracks = useSelector(allTracksSelector)
 
+  const {} = useSetLikeMutation()
+
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)
     }, timer)
   }, [])
+
+  useEffect(() => {
+    console.log('Track Loading')
+    if (data) {
+      dispatch(getAllTracks(data))
+    }
+  }, [data, dispatch])
 
   const setSong = (track) => {
     const indexOfSong = allTracks.indexOf(track)

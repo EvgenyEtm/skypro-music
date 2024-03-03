@@ -1,11 +1,11 @@
-import { createContext, useEffect } from 'react'
+import { createContext /*useEffect*/ } from 'react'
 import { useNavigate } from 'react-router'
 import { useContext } from 'react'
 import { useState } from 'react'
-import { getTracks } from '../Api'
-import { getAllTracks } from '../store/Slice/SliceTracks'
-import { useDispatch, useSelector } from 'react-redux'
-import { allTracksSelector } from '../store/Selectors/Selectors'
+//import { getTracks } from '../Api'
+//import { getAllTracks } from '../store/Slice/SliceTracks'
+//import { useDispatch, useSelector } from 'react-redux'
+//import { allTracksSelector } from '../store/Selectors/Selectors'
 
 export const UserContext = createContext(null)
 
@@ -14,33 +14,33 @@ export const useUserContext = () => {
 }
 
 export const LocalContext = ({ children }) => {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   // const [selectedSong, setSelectedSong] = useState('')
   //const [isPlaying, setIsPlaying] = useState(null)
   const [isLoadind, setIsLoadind] = useState(null)
   // const isLiked = useSelector(setIsLiked)
   const [isLoginMode, setIsLoginMode] = useState(true)
-  useEffect(() => {
-    async function getApiTracks() {
-      try {
-        const setResponse = await getTracks()
-        setIsLoadind(null)
-        dispatch(getAllTracks(setResponse))
-        // setArrayTrack(setResponse)
-      } catch (error) {
-        console.warn(error.message)
-        setIsLoadind(
-          `${error.message}, Ошибка сервера, повторите запрос позднее.`,
-        )
-      }
-    }
-    getApiTracks()
-  }, [dispatch])
+  // useEffect(() => {
+  //   async function getApiTracks() {
+  //     try {
+  //       const setResponse = await getTracks()
+  //       setIsLoadind(null)
+  //       dispatch(getAllTracks(setResponse))
+  //       // setArrayTrack(setResponse)
+  //     } catch (error) {
+  //       console.warn(error.message)
+  //       setIsLoadind(
+  //         `${error.message}, Ошибка сервера, повторите запрос позднее.`,
+  //       )
+  //     }
+  //   }
+  //   getApiTracks()
+  // }, [dispatch])
   //const shuffleAllTracks = useSelector(shuffleAllTracksSelector)
   //const allTracks = useSelector(allTracksSelector)
   // console.log(allTracks)
   //const shuffle = useSelector(shuffleSelector)
-  const arrayTrack = useSelector(allTracksSelector)
+  // const arrayTrack = useSelector(allTracksSelector)
 
   const navigate = useNavigate()
   const logoutButton = () => {
@@ -56,7 +56,7 @@ export const LocalContext = ({ children }) => {
         logoutButton,
         isLoadind,
         setIsLoadind,
-        arrayTrack,
+        //       arrayTrack,
         isLoginMode,
         setIsLoginMode,
       }}
