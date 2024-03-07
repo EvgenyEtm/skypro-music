@@ -8,14 +8,14 @@ import { getToken, login } from '../../Api'
 export const Login = ({ setUsername }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(false)
+  //const [user, setUser] = useState(false)
 
   const handleLogin = async () => {
-    localStorage.setItem('token', true)
-    const token = localStorage.getItem('token')
-    setUser(token)
-    console.log(user)
-    console.log('1')
+    // localStorage.setItem('token', true)
+    // const token = localStorage.getItem('token')
+    // setUser(token)
+    // console.log(user)
+    // console.log('1')
     try {
       console.log('2')
       if (email && password) {

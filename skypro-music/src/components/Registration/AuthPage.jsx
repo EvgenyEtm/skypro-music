@@ -20,8 +20,16 @@ export default function AuthPage() {
       try {
         setDisabledButton(true)
         await login(email, password)
+
         const token = await getToken(email, password)
-        localStorage.setItem('token', JSON.stringify(token))
+        //console.log(token)
+
+        const refToken = token.refresh
+        const accToken = token.access
+        localStorage.setItem('fulltoken', JSON.stringify(token))
+        localStorage.setItem('token', JSON.stringify(refToken))
+        localStorage.setItem('accessToken', JSON.stringify(accToken))
+        console.log(accToken)
         navigate('/')
       } catch (error) {
         console.warn(error.message)
@@ -51,6 +59,7 @@ export default function AuthPage() {
           const response = await signupUser(email, password)
           console.log(response)
           localStorage.setItem('token', JSON.stringify(response))
+
           setIsLoginMode(true)
           navigate('/')
         }

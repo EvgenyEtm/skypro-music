@@ -8,8 +8,18 @@ import { Logout } from '../../components/Logout/Logout.jsx'
 import { useGetMainPlaylistQuery } from '../../api/playlist.js'
 
 export const MainPage = () => {
+  //id 3057
   const { data, error, isLoading } = useGetMainPlaylistQuery()
-
+  isLoading ?? console.log(data)
+  // const test = () => {
+  //   data &&
+  //     data.map((qw) =>
+  //       console.log(
+  //         Boolean(qw.stared_user.find((user) => user.id === 3057)),
+  //       ),
+  //     )
+  // }
+  // console.log(test())
   return (
     <S.Wrapper>
       <S.Container>
@@ -18,7 +28,7 @@ export const MainPage = () => {
           <Navigation />
           <S.MainCenterblock>
             <TrackList error={error} isLoading={isLoading} />
-            <Track data={data} />
+            <Track trackData={data} />
           </S.MainCenterblock>
           <S.MainCenterblock>
             <Logout />

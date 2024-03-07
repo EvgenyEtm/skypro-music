@@ -6,10 +6,11 @@ import { Logout } from '../../components/Logout/Logout.jsx'
 import { SearchBlock } from '../../components/SearchBlock/Search.jsx'
 import { TrackBar } from '../../components/TrackBar/TrackBar.jsx'
 import { useEffect, useState } from 'react'
-import { useUserContext } from '../../context/UserContext.jsx'
+//import { useUserContext } from '../../context/UserContext.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import Skeleton from 'react-loading-skeleton'
 import { setSingles, removeTrack } from '../../store/Slice/SliceTracks'
+import { useGetFavoritePlaylistQuery } from '../../api/playlist.js'
 
 import {
   // allTracksSelector,
@@ -17,19 +18,18 @@ import {
   setIsPlaying,
 } from '../../store/Selectors/Selectors'
 export const MyPlaylist = () => {
+  const { data, isLoadind } = useGetFavoritePlaylistQuery()
   const [isLoading, setIsLoading] = useState(true)
-  const { isLoadind } = useUserContext()
+  //const { isLoadind } = useUserContext()
   const dispatch = useDispatch()
   const selectedSong = useSelector(setSelectedSong)
   const isPlaying = useSelector(setIsPlaying)
-  const allTracks = useSelector((store) => store.track.isLikedIds)
+  //const data = useSelector((store) => store.track.isLikedIds)
   const setSong = (track) => {
-    const indexOfSong = allTracks.indexOf(track)
+    const indexOfSong = data.indexOf(track)
 
     dispatch(setSingles({ track, indexOfSong }))
   }
-
-  console.log(allTracks)
 
   useEffect(() => {
     setTimeout(() => {
@@ -46,14 +46,14 @@ export const MyPlaylist = () => {
             <SearchBlock />
             <S.CenterblockSubHead>Мои треки</S.CenterblockSubHead>
             <TrackBar />
-            {allTracks ? (
+            {data ? (
               <S.ContentPlaylist>
                 {isLoadind ? (
                   'Не удалось загрузить плейлист, попробуйте позже'
                 ) : (
                   <>
                     {' '}
-                    {allTracks.map((track) => (
+                    {data.map((track) => (
                       <S.PlaylistItem key={track.id}>
                         <S.PlaylistTrack>
                           <S.TrackTitle>

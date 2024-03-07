@@ -9,7 +9,7 @@ export async function getTracks() {
   if (!response.ok) {
     throw new Error('Ошибка сервера')
   }
-
+  console.log(data)
   return data
 }
 
@@ -31,21 +31,55 @@ export async function login(email, password) {
     throw new Error('Пользователь с таким email или паролем не найден')
   }
   const userData = await response.json()
+  console.log(userData)
   return userData
 }
 
-export async function getToken(email, password) {
-  return await fetch('https://skypro-music-api.skyeng.tech/user/token/', {
-    method: 'POST',
-    body: JSON.stringify({
-      email,
-      password,
-    }),
-    headers: {
-      // API требует обязательного указания заголовка content-type, так апи понимает что мы посылаем ему json строчку в теле запроса
-      'content-type': 'application/json',
+export async function refreshToken(accessToken) {
+  // console.log(accessToken)
+  const responce = await fetch(
+    'https://skypro-music-api.skyeng.tech/user/token/refresh/',
+
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        refresh: accessToken,
+      }),
+      headers: {
+        // API требует обязательного указания заголовка content-type, так апи понимает что мы посылаем ему json строчку в теле запроса
+        'content-type': 'application/json',
+      },
     },
-  }).then((response) => response.json())
+  )
+  const data = await responce.json()
+  console.log(data.access)
+  localStorage.setItem('accessToken', JSON.stringify(data.access))
+  //console.log(localStorage.getItem('accessToken'))
+  return data
+}
+
+export async function getToken(email, password) {
+  const responce = await fetch(
+    'https://skypro-music-api.skyeng.tech/user/token/',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+      headers: {
+        // API требует обязательного указания заголовка content-type, так апи понимает что мы посылаем ему json строчку в теле запроса
+        'content-type': 'application/json',
+      },
+    },
+  )
+  const data = await responce.json()
+
+  if (!responce.ok) {
+    throw new Error('Ошибка получения токена')
+  } else {
+    return data
+  }
 }
 
 // ЗАРЕГИСТРИРОВАТЬСЯ

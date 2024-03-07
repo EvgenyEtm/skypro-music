@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import * as S from './Track.Styles'
-import { timer } from '../Bar/Bar'
+// import { timer } from '../Bar/Bar'
 import { useUserContext } from '../../context/UserContext'
 import {
   setSingles,
@@ -13,36 +13,61 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   setSelectedSong,
   setIsPlaying,
+  //accessSelector,
   // setIsLiked,
   allTracksSelector,
 } from '../../store/Selectors/Selectors'
-import { useSetLikeMutation } from '../../api/playlist'
+import { useSetLikeMutation, useSetDislikeMutation } from '../../api/playlist'
+//import { refreshToken } from '../../Api'
 
-export const Track = ({ data }) => {
+export const Track = ({ trackData }) => {
   const selectedSong = useSelector(setSelectedSong)
   // const isLiked = useSelector(setIsLiked)
   const isPlaying = useSelector(setIsPlaying)
-  const [isLoading, setIsLoading] = useState(true)
+  //const [isLoading, setIsLoading] = useState(true)
   const { isLoadind } = useUserContext()
   const dispatch = useDispatch()
   const allTracks = useSelector(allTracksSelector)
 
-  const [setLike] = useSetLikeMutation()
+  const [like, { data, error, isLoading }] = useSetLikeMutation({
+    // track,
+    // token,
+  })
+  const [setDislike] = useSetDislikeMutation()
+  //const refToken = localStorage.getItem('token').replace(/['"«»]/g, '')
+  const token = localStorage.getItem('accessToken').replace(/['"«»]/g, '')
+  const trackLiked = async (track) => {
+    console.log(token)
+    like({
+      track,
+      token,
+    })
+    // setLike(track, token)
+    // await refreshToken(refToken)
+  }
 
-  const token = localStorage.getItem('token')
+  const trackDisiked = async (track) => {
+    setDislike(track)
+    //  await refreshToken(refToken)
+  }
+
+  // useEffect(() => {
+  //   refreshToken(refToken)
+  // }, [refToken, setLike])
+  // //console.log(accessToken)
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsLoading(false)
+  //   }, timer)
+  // }, [])
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, timer)
-  }, [])
-
-  useEffect(() => {
-    console.log('Track Loading')
-    if (data) {
-      dispatch(getAllTracks(data))
+    //console.log('Track Loading')
+    if (trackData) {
+      dispatch(getAllTracks(trackData))
     }
-  }, [data, dispatch])
+  }, [trackData, dispatch])
 
   const setSong = (track) => {
     const indexOfSong = allTracks.indexOf(track)
@@ -91,9 +116,7 @@ export const Track = ({ data }) => {
                       highlightColor="#444"
                     />
                   ) : (
-                    <S.TrackAuthorLink
-                      onClick={() => setSong(track, token.access)}
-                    >
+                    <S.TrackAuthorLink onClick={() => setSong(track)}>
                       {track.author}
                     </S.TrackAuthorLink>
                   )}
@@ -122,10 +145,18 @@ export const Track = ({ data }) => {
                     />
                   ) : (
                     <>
-                      <S.TrackLikeSvg
-                        alt="like"
-                        onClick={() => setLike(track)}
-                      />
+                      {/* TrackLikeSvgActive */}
+                      {track.stared_user.find((user) => user.id === 3057) ? (
+                        <S.TrackLikeSvgActive
+                          alt="dislike"
+                          onClick={() => trackDisiked(track)}
+                        />
+                      ) : (
+                        <S.TrackLikeSvg
+                          alt="like"
+                          onClick={() => trackLiked(track)}
+                        />
+                      )}
 
                       <S.TrackTimeText>
                         {Math.floor(track.duration_in_seconds / 60) < 10

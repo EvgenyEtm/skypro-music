@@ -109,23 +109,3 @@ export const {
 } = tracksSlice.actions
 
 export default tracksSlice.reducer
-
-//state.allTracks.map((track) => track))
-
-// console.log(action.payload.track.id)
-// state.isliked = !state.isliked
-// console.log(
-//   state.allTracks.find((track) => track === action.payload.track),
-// )
-// // console.log(action.payload.id)
-// console.log(
-//   state.allTracks.find((track) => track.payload === action.payload),
-// )
-
-// //state.selectedSong.isliked = true
-// console.log(state.selectedSong)
-// console.log(action.payload.id)
-// toggledLike.isliked = !toggledLike.isliked
-// let asd = state.isLikedIds
-// toggledLike.payload = { ...asd }
-// state.isLikedIds = [...toggledLike.id]
