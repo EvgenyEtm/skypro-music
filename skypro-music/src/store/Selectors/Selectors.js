@@ -5,14 +5,5 @@ export const setSelectedSong = (store) => store.track.selectedSong
 export const setIsPlaying = (store) => store.track.isPlaying
 export const setIsLiked = (store) => store.track.isliked
 export const setIsLikedIds = (store) => store.track.isLikedIds
-
-{
-  /* {isLoading ? (
-                      <Skeleton
-                        width={55}
-                        height={55}
-                        baseColor="#202020"
-                        highlightColor="#444"
-                      />
-                    ) : null} */
-}
+export const setFullToken = (store) => store.auth.token
+export const setUser = (store) => store.auth.user

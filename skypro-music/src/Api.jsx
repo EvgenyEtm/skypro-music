@@ -37,7 +37,7 @@ export async function login(email, password) {
 
 export async function refreshToken(accessToken) {
   // console.log(accessToken)
-  const responce = await fetch(
+  const response = await fetch(
     'https://skypro-music-api.skyeng.tech/user/token/refresh/',
 
     {
@@ -51,11 +51,18 @@ export async function refreshToken(accessToken) {
       },
     },
   )
-  const data = await responce.json()
-  console.log(data.access)
-  localStorage.setItem('accessToken', JSON.stringify(data.access))
-  //console.log(localStorage.getItem('accessToken'))
-  return data
+  if (response.status === 401) {
+    throw new Error('Пользователь с таким email или паролем не найден')
+  }
+  try {
+    const data = await response.json()
+    //console.log(data.access)
+    localStorage.setItem('accessToken', JSON.stringify(data.access))
+    //console.log(localStorage.getItem('accessToken'))
+    return data
+  } catch (error) {
+    throw new Error(error.message)
+  }
 }
 
 export async function getToken(email, password) {

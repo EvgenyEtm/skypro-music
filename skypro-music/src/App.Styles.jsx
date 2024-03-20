@@ -106,3 +106,24 @@ export const MainSidebar = styled.div`
   max-width: 418px;
   padding: 20px 90px 20px 78px;
 `
+export const PlaylistItem = styled.div`
+  width: 100%;
+  display: block;
+  margin-bottom: 12px;
+`
+
+export const ContentPlaylist = styled.div`
+  display: flex;
+  align-items: center;
+  display: box;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  height: 600px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+`

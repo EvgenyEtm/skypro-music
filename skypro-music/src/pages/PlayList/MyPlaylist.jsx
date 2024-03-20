@@ -5,37 +5,87 @@ import * as S from './PlayList.Styles.jsx'
 import { Logout } from '../../components/Logout/Logout.jsx'
 import { SearchBlock } from '../../components/SearchBlock/Search.jsx'
 import { TrackBar } from '../../components/TrackBar/TrackBar.jsx'
-import { useEffect, useState } from 'react'
+import { useGetFavoritePlaylistQuery } from '../../api/playlist.js'
+
+//import { useEffect, useState } from 'react'
 //import { useUserContext } from '../../context/UserContext.jsx'
 import { useDispatch, useSelector } from 'react-redux'
-import Skeleton from 'react-loading-skeleton'
-import { setSingles, removeTrack } from '../../store/Slice/SliceTracks'
-import { useGetFavoritePlaylistQuery } from '../../api/playlist.js'
+// import Skeleton from 'react-loading-skeleton'
 
 import {
   // allTracksSelector,
-  setSelectedSong,
-  setIsPlaying,
+  // setSelectedSong,
+  // setIsPlaying,
+  setFullToken,
+  setIsLikedIds,
+  // setSelectedSong,
 } from '../../store/Selectors/Selectors'
+import { refreshToken } from '../../Api.jsx'
+import { useEffect } from 'react'
+//import Track from '../../components/Track/Track.jsx'
+//import { useNavigate } from 'react-router-dom'
+import Track from '../../components/Track/Track.jsx'
+import { setFavoriteTracks } from '../../store/Slice/SliceTracks.js'
+
 export const MyPlaylist = () => {
-  const { data, isLoadind } = useGetFavoritePlaylistQuery()
-  const [isLoading, setIsLoading] = useState(true)
-  //const { isLoadind } = useUserContext()
+  //  const navigate = useNavigate()
+  const { data, isLoading } = useGetFavoritePlaylistQuery()
+  // const [isLoading, setIsLoading] = useState(true)
+  // const { isLoadind } = useUserContext()
   const dispatch = useDispatch()
-  const selectedSong = useSelector(setSelectedSong)
-  const isPlaying = useSelector(setIsPlaying)
-  //const data = useSelector((store) => store.track.isLikedIds)
-  const setSong = (track) => {
-    const indexOfSong = data.indexOf(track)
+  const allTracks = useSelector(setIsLikedIds)
+  //console.log(data)
 
-    dispatch(setSingles({ track, indexOfSong }))
-  }
-
+  // const test = () => {
+  //   data &&
+  //     data.map((qw) =>
+  //       console.log(
+  //         Boolean(qw.stared_user.find((user) => user.id === 3057)),
+  //       ),
+  //     )
+  // }
+  // console.log(test())
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 2000)
-  }, [])
+    console.log('Favorite Loading')
+    if (data) {
+      dispatch(setFavoriteTracks(data))
+    }
+  }, [data, dispatch])
+
+  // console.log(allTracks)
+  // const selectedSong = useSelector(setSelectedSong)
+  // const isPlaying = useSelector(setIsPlaying)
+  //const data = useSelector((store) => store.track.isLikedIds)
+  // const setSong = (track) => {
+  //   const indexOfSong = data.indexOf(track)
+
+  //   dispatch(setSingles({ track, indexOfSong }))
+  // }
+
+  // const test = () => {
+  //   data && data.map((qw) => console.log(qw.stared_user))
+  // }
+  // console.log(test())
+
+  const fulltoken = useSelector(setFullToken)
+  let tokenref = localStorage.getItem('token').replace(/['"«»]/g, '')
+  useEffect(() => {
+    try {
+      fulltoken
+        ? refreshToken(fulltoken.refresh)
+        : `${refreshToken(tokenref)} ${console.log(tokenref)}`
+    } catch (error) {
+      console.warn(error.message)
+    }
+  }, [fulltoken, tokenref])
+
+  // console.log(data)
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsLoading(false)
+  //   }, 2000)
+  // }, [])
   return (
     <G.Wrapper>
       <G.Container>
@@ -46,120 +96,26 @@ export const MyPlaylist = () => {
             <SearchBlock />
             <S.CenterblockSubHead>Мои треки</S.CenterblockSubHead>
             <TrackBar />
-            {data ? (
+            {allTracks.length > 0 ? (
               <S.ContentPlaylist>
-                {isLoadind ? (
+                {isLoading ? (
                   'Не удалось загрузить плейлист, попробуйте позже'
                 ) : (
                   <>
-                    {' '}
-                    {data.map((track) => (
-                      <S.PlaylistItem key={track.id}>
-                        <S.PlaylistTrack>
-                          <S.TrackTitle>
-                            <S.TrackTitleImage>
-                              {selectedSong && selectedSong.id === track.id ? (
-                                <S.PointPlaying $playing={isPlaying} />
-                              ) : (
-                                <S.TrackTitleSvg alt="music" />
-                              )}
-                            </S.TrackTitleImage>
-                            <S.TrackTitleText>
-                              {isLoading ? (
-                                <Skeleton
-                                  width={200}
-                                  baseColor="#202020"
-                                  highlightColor="#444"
-                                />
-                              ) : (
-                                <S.TrackTitleLink
-                                  onClick={() => setSong(track)}
-                                >
-                                  {track.name}
-                                  <S.TrackTitleSpan></S.TrackTitleSpan>
-                                </S.TrackTitleLink>
-                              )}
-                            </S.TrackTitleText>
-                          </S.TrackTitle>
-                          <S.TrackAuthor>
-                            {isLoading ? (
-                              <Skeleton
-                                width={270}
-                                baseColor="#202020"
-                                highlightColor="#444"
-                              />
-                            ) : (
-                              <S.TrackAuthorLink onClick={() => setSong(track)}>
-                                {track.author}
-                              </S.TrackAuthorLink>
-                            )}
-                          </S.TrackAuthor>
-                          <S.TrackAlbum>
-                            {isLoading ? (
-                              <Skeleton
-                                width={250}
-                                baseColor="#202020"
-                                highlightColor="#444"
-                              />
-                            ) : (
-                              <S.TrackAlbumLink>{track.album}</S.TrackAlbumLink>
-                            )}
-                          </S.TrackAlbum>
-                          {/* <FavoriteTrack
-                  isLiked={isLiked}
-                  setFavoriteTracks={setFavoriteTracks}
-                /> */}
-                          <S.TrackTime>
-                            {isLoading ? (
-                              <Skeleton
-                                width={40}
-                                baseColor="#202020"
-                                highlightColor="#444"
-                              />
-                            ) : (
-                              <>
-                                <S.TrackLikeSvgActive
-                                  onClick={() =>
-                                    dispatch(removeTrack({ id: track.id }))
-                                  }
-                                />
-                                {/* {isLiked.id === track.id ? (
-                        <S.TrackLikeSvgActive
-                          onClick={() => dispatch(setFavoriteTracks({ track }))}
-                        />
-                      ) : (
-                        <S.TrackLikeSvg
-                          alt="like"
-                          onClick={() =>
-                            dispatch(setFavoriteTracks({ id: track.id }))
-                          }
-                        />
-                      )} */}
-
-                                <S.TrackTimeText>
-                                  {Math.floor(track.duration_in_seconds / 60) <
-                                  10
-                                    ? `0${Math.floor(
-                                        track.duration_in_seconds / 60,
-                                      )}`
-                                    : Math.floor(
-                                        track.duration_in_seconds / 60,
-                                      )}{' '}
-                                  {Math.floor(track.duration_in_seconds % 60) <
-                                  9
-                                    ? `0${Math.floor(
-                                        track.duration_in_seconds % 60,
-                                      )}`
-                                    : Math.floor(
-                                        track.duration_in_seconds % 60,
-                                      )}
-                                </S.TrackTimeText>
-                              </>
-                            )}
-                          </S.TrackTime>
-                        </S.PlaylistTrack>
-                      </S.PlaylistItem>
-                    ))}
+                    {allTracks &&
+                      allTracks.map((track) => (
+                        <S.PlaylistItem key={track.id}>
+                          <Track
+                            key={track.id}
+                            fulltoken={fulltoken}
+                            track={track}
+                            isLoading={isLoading}
+                            dataFavorite={data}
+                            dispatch={dispatch}
+                            setFavoriteTracks={setFavoriteTracks}
+                          />
+                        </S.PlaylistItem>
+                      ))}
                   </>
                 )}
               </S.ContentPlaylist>

@@ -4,6 +4,14 @@ import { useEffect, useState } from 'react'
 import LoginImg from '../../img/logo_modal.png'
 import { getToken, login, signupUser } from '../../Api'
 import { useUserContext } from '../../context/UserContext'
+// import { setAccessToken } from ''
+import {
+  //getAuthData,
+  setAccessToken,
+  setUserData,
+  //clearToken,
+} from '../../store/Slice/SliceAuth'
+import { useDispatch } from 'react-redux'
 
 export default function AuthPage() {
   const [error, setError] = useState(null)
@@ -14,28 +22,31 @@ export default function AuthPage() {
   const [disabledButton, setDisabledButton] = useState(false)
   const navigate = useNavigate()
   const { isLoginMode, setIsLoginMode } = useUserContext()
-
+  const dispatch = useDispatch()
   const handleLogin = async () => {
     if (email && password) {
       try {
         setDisabledButton(true)
-        await login(email, password)
-
+        const userData = await login(email, password)
+        dispatch(setUserData({ userData }))
         const token = await getToken(email, password)
         //console.log(token)
 
         const refToken = token.refresh
         const accToken = token.access
         localStorage.setItem('fulltoken', JSON.stringify(token))
+        localStorage.setItem('userData', JSON.stringify(userData))
+        dispatch(setAccessToken({ token }))
+        //
         localStorage.setItem('token', JSON.stringify(refToken))
         localStorage.setItem('accessToken', JSON.stringify(accToken))
-        console.log(accToken)
+        //console.log(accToken)
         navigate('/')
       } catch (error) {
         console.warn(error.message)
         setError(error.message)
       } finally {
-        console.log(error)
+        //console.log(error)
         setDisabledButton(false)
       }
     }
